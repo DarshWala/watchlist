@@ -19,6 +19,12 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use(express.json());
 
+app.get('/watchlist' ,async (req , res) => {
+  const watchlist = await Movie.find();
+  res.status(200).json(watchlist);
+})
+
+
 // MongoDB connection
 await mongoose.connect(MONGODB_URI);
 console.log("MongoDB connected ✅");
