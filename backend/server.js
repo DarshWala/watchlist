@@ -2,11 +2,10 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import dns from 'dns' 
-import Movie from './models/Movie.js';
+import dns from 'dns';
+import movieRouter from './routers/movies.js';
 
-dns.setServers(['1.1.1.1' , '8.8.8.8']);
-
+dns.setServers(['1.1.1.1', '8.8.8.8']);
 
 dotenv.config();
 
@@ -19,16 +18,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use(express.json());
 
-app.get('/watchlist' ,async (req , res) => {
-  const watchlist = await Movie.find();
-  res.status(200).json(watchlist);
-})
-
-app.post('/watchlist' , async (req , res) => {
-  const movie = await Movie.create(req.body);
-  res.status(201).json(movie);
-
-})
+// Routes
+app.use('/watchlist', movieRouter);
 
 // MongoDB connection
 await mongoose.connect(MONGODB_URI);
