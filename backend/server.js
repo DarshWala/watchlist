@@ -24,6 +24,11 @@ app.get('/watchlist' ,async (req , res) => {
   res.status(200).json(watchlist);
 })
 
+app.post('/watchlist' , async (req , res) => {
+  const movie = await Movie.create(req.body);
+  res.status(201).json(movie);
+
+})
 
 // MongoDB connection
 await mongoose.connect(MONGODB_URI);
