@@ -13,8 +13,7 @@ router.get("/", async (req, res) => {
   try {
     const movies = await Movie.find();
     res.status(200).json(movies);
-    console.log('request ok');
-    
+    console.log("request ok");
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -50,7 +49,6 @@ router.post("/", async (req, res) => {
 
       const usefulData = omdbData.Search[0];
       // console.log(usefuxlData);
-      res.json(usefulData);
 
       const movie = {
         name: usefulData.Title,
@@ -60,7 +58,8 @@ router.post("/", async (req, res) => {
 
       // console.log(movie);
 
-      await Movie.create(movie);
+      const savedMovie = await Movie.create(movie);
+      return res.status(201).json(savedMovie);
     }
     if (!omdbRes.ok) {
       console.log("Error Occured");
@@ -81,10 +80,8 @@ router.delete("/", async (req, res) => {
       // await Movie.findByIdAndDelete(id);
       res.json(movieToBeDeleted);
     }
-    
   } catch (error) {
     console.log(`error occured ${error} `);
-    
   }
 });
 
