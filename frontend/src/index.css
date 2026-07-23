@@ -1,4 +1,17 @@
-body{
-    background-color: rgb(39, 39, 39);
-    
-} 
+body {
+  background-color: rgb(39, 39, 39);
+  color: beige;
+}
+
+.main-heading {
+  justify-self: center;
+  font-family: cursive;
+}
+
+.movie-form-sec {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0px;
+}
