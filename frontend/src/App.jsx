@@ -1,6 +1,6 @@
 import React from "react";
 import AddMovieForm from "./components/addMovieForm";
-
+import MovieTileGrid from "./components/movieTileGrid";
 function App() {
   const [movieData, setMovieData] = React.useState([]);
   // console.log(movieData);
@@ -32,7 +32,7 @@ function App() {
       } else {
         const data = await resFromBack.json();
         console.log(data);
-        setMovieData(prevData => [data , ...prevData]);
+        setMovieData((prevData) => [...prevData , data]);
         // console.log(movieData);
       }
     } catch (error) {
@@ -48,25 +48,32 @@ function App() {
       if (res.ok) {
         const data = await res.json();
         // console.log(data);
-        setMovieData(data)
+        setMovieData(data);
       }
     }
     fetchWatchlist();
   }, []);
 
-  
-
-  
-console.log(movieData);
-
+  //! this is for testing if the state updates or not
+  // console.log(movieData);
 
   return (
     <>
       <h1 className="main-heading">WATCHLIST</h1>
       <AddMovieForm formAction={addMovie} />
 
-      <h2 style={{textAlign : 'center' , fontFamily : 'monospace' , color : 'aliceblue' , fontSize : 35}}>Current Watchlist</h2>
-      
+      <h2
+        style={{
+          textAlign: "center",
+          fontFamily: "monospace",
+          color: "aliceblue",
+          fontSize: 35,
+        }}
+      >
+        Current Watchlist
+      </h2>
+
+      <MovieTileGrid watchlist = {movieData} />
     </>
   );
 }
