@@ -58,7 +58,7 @@ router.post("/", async (req, res) => {
         image: usefulData.Poster,
       };
 
-      console.log(movie);
+      // console.log(movie);
 
       await Movie.create(movie);
     }
