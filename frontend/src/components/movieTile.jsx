@@ -9,7 +9,7 @@ export default function MovieTile(props) {
         <img src={props.image} alt={props.name || "movie poster"} />
         <div className="tile-overlay">
           <p className="tile-title">{props.name}</p>
-          <button className="delete-btn">Removex from Watchlist</button>
+          <button className="delete-btn">Remove from Watchlist</button>
         </div>
     </div>
   );
