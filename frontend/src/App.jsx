@@ -20,7 +20,7 @@ function App() {
     // console.log(JSON.stringify(queryToSend));
 
     try {
-      const resFromBack = await fetch("http://localhost:8000/watchlist", {
+      const resFromBack = await fetch(`${import.meta.env.VITE_API_URL}/watchlist`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -46,7 +46,7 @@ function App() {
 
   React.useEffect(() => {
     async function fetchWatchlist() {
-      const res = await fetch("http://localhost:8000/watchlist");
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/watchlist`);
       if (res.ok) {
         const data = await res.json();
         // console.log(data);
