@@ -4,6 +4,7 @@ import MovieTileGrid from "./components/movieTileGrid";
 function App() {
   const [movieData, setMovieData] = React.useState([]);
   const [loading , setLoading] = React.useState(true);
+  const [error , setError] = React.useState(false);
   // console.log(movieData);
 
   // let data;
@@ -53,6 +54,9 @@ function App() {
         setMovieData(data);
         setLoading(false)
       }
+      else{
+        setError(true)
+      }
     }
     fetchWatchlist();
   }, []);
@@ -77,7 +81,7 @@ function App() {
       </h2>
 
       {loading && <p style={{textAlign : 'center' , fontSize : '2rem'}}>Loading...</p>}
-
+      {error && <p style={{textAlign : 'center' , fontSize : '1.5rem', color: 'red'}}>Failed to load watchlist.</p>}
       <MovieTileGrid watchlist = {movieData} />
     </>
   );
