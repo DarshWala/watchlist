@@ -3,6 +3,7 @@ import AddMovieForm from "./components/addMovieForm";
 import MovieTileGrid from "./components/movieTileGrid";
 function App() {
   const [movieData, setMovieData] = React.useState([]);
+  const [loading , setLoading] = React.useState(true);
   // console.log(movieData);
 
   // let data;
@@ -33,6 +34,7 @@ function App() {
         const data = await resFromBack.json();
         console.log(data);
         setMovieData((prevData) => [...prevData , data]);
+        // setLoading(false)
         // console.log(movieData);
       }
     } catch (error) {
@@ -49,6 +51,7 @@ function App() {
         const data = await res.json();
         // console.log(data);
         setMovieData(data);
+        setLoading(false)
       }
     }
     fetchWatchlist();
@@ -72,6 +75,8 @@ function App() {
       >
         Current Watchlist
       </h2>
+
+      {loading && <p style={{textAlign : 'center' , fontSize : '2rem'}}>Loading...</p>}
 
       <MovieTileGrid watchlist = {movieData} />
     </>
