@@ -31,10 +31,14 @@ function App() {
 
       if (!resFromBack.ok) {
         console.log("Network Error");
+        setError(true)
+        setLoading(false)
       } else {
         const data = await resFromBack.json();
         console.log(data);
         setMovieData((prevData) => [...prevData , data]);
+        console.log('movie added');
+        
         // setLoading(false)
         // console.log(movieData);
       }
@@ -56,6 +60,7 @@ function App() {
       }
       else{
         setError(true)
+        setLoading(false)
       }
     }
     fetchWatchlist();

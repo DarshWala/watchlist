@@ -27,7 +27,11 @@ box-shadow: 24px -24px 56px #d3d3d3,
   overflow: hidden;
   width: 100%;
   max-width: 300px;
-  
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .tile-div > img {
@@ -36,6 +40,44 @@ box-shadow: 24px -24px 56px #d3d3d3,
   aspect-ratio: 2/3;
   object-fit: cover;
   display: block;
+}
+
+.tile-overlay {
+  display: none;
+  position: absolute;
+  top: 5px;
+  width: 75%;
+  height: calc(100% - 10px);
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #ffffff;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 12px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.tile-div:hover .tile-overlay {
+  display: flex;
+}
+
+.tile-title {
+  margin: 0 0 12px 0;
+  font-size: 1.1rem;
+  font-weight: bold;
+  word-break: break-word;
+}
+
+.delete-btn {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
 }
 
 

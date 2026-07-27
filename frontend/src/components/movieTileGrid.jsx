@@ -8,7 +8,7 @@ export default function MovieTileGrid(props){
     
 
     const tiles = watchlist.map((item) => {
-        return < MovieTile key={item._id} image = {item.image} />
+        return < MovieTile key={item._id} name={item.name} image = {item.image} />
         // console.log('mapping over movie tiles' , item);
         
     })
