@@ -47,6 +47,8 @@ function App() {
       setError(true)
     }
 
+    e.target.reset();
+
     // getting all movies for updating state
   }
 
