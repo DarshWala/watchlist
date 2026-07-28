@@ -44,23 +44,56 @@ function App() {
       }
     } catch (error) {
       console.log(`Error ${error}`);
+      setError(true)
     }
 
     // getting all movies for updating state
   }
 
+  
+  async function deletePressed(_id) {
+    const elementIdToDelete = { id: _id };
+
+    try {
+      const resForDelete = await fetch(
+        `${import.meta.env.VITE_API_URL}/watchlist`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(elementIdToDelete),
+        },
+      );
+
+      if (resForDelete.ok) {
+        setMovieData((prev) => prev.filter((movie) => movie._id !== _id));
+        console.log(`movie with id ${_id} successfully deleted`);
+      } else {
+        console.log("Failed to delete movie");
+      }
+    } catch (error) {
+      console.log(`error ${error}`);
+    }
+  }
+
+
   React.useEffect(() => {
     async function fetchWatchlist() {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/watchlist`);
-      if (res.ok) {
-        const data = await res.json();
-        // console.log(data);
-        setMovieData(data);
-        setLoading(false)
-      }
-      else{
-        setError(true)
-        setLoading(false)
+      try {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/watchlist`);
+        if (res.ok) {
+          const data = await res.json();
+          // console.log(data);
+          setMovieData(data);
+        } else {
+          setError(true);
+        }
+      } catch (error) {
+        console.log(`Error ${error}`);
+        setError(true);
+      } finally {
+        setLoading(false);
       }
     }
     fetchWatchlist();
@@ -86,8 +119,8 @@ function App() {
       </h2>
 
       {loading && <p style={{textAlign : 'center' , fontSize : '2rem'}}>Loading...</p>}
-      {error && <p style={{textAlign : 'center' , fontSize : '1.5rem', color: 'red'}}>Failed to load watchlist.</p>}
-      <MovieTileGrid watchlist = {movieData} />
+      {error && <p style={{textAlign : 'center' , fontSize : '1.5rem', color: 'red'}}>Failed to load watchlist. Try Reloading</p>}
+      <MovieTileGrid deleteFromWatchlist={deletePressed} watchlist = {movieData} />
     </>
   );
 }
