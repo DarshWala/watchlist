@@ -1,10 +1,14 @@
 import React from "react";
 import AddMovieForm from "./components/addMovieForm";
 import MovieTileGrid from "./components/movieTileGrid";
+import Toast from "./components/Toast";
 function App() {
   const [movieData, setMovieData] = React.useState([]);
   const [loading , setLoading] = React.useState(true);
-  const [error , setError] = React.useState(false);
+  const [loadingError , setLoadingError] = React.useState(false);
+
+  const [addError , setAddError] = React.useState(false);
+  
   // console.log(movieData);
 
   // let data;
@@ -31,7 +35,7 @@ function App() {
 
       if (!resFromBack.ok) {
         console.log("Network Error");
-        setError(true)
+        setAddError(true)
         setLoading(false)
       } else {
         const data = await resFromBack.json();
@@ -44,7 +48,7 @@ function App() {
       }
     } catch (error) {
       console.log(`Error ${error}`);
-      setError(true)
+      setAddError(true)
     }
 
     e.target.reset();
@@ -89,11 +93,11 @@ function App() {
           // console.log(data);
           setMovieData(data);
         } else {
-          setError(true);
+          setLoadingError(true);
         }
       } catch (error) {
         console.log(`Error ${error}`);
-        setError(true);
+        setLoadingError(true);
       } finally {
         setLoading(false);
       }
@@ -109,6 +113,15 @@ function App() {
       <h1 className="main-heading">WATCHLIST</h1>
       <AddMovieForm formAction={addMovie} />
 
+      {addError && (
+        <Toast
+          message="Could not add item. Please retry."
+          type="error"
+          duration={3000}
+          onClose={() => setAddError(false)}
+        />
+      )}
+
       <h2
         style={{
           textAlign: "center",
@@ -122,9 +135,16 @@ function App() {
 
       {loading && <p className="loading-msg">Loading...</p>}
       {/* General error when fetching watchlist */}
-{error && <p className="error-msg">Failed to load watchlist. Please try again.</p>}
+{loadingError && (
+  <Toast
+    message="Failed to load watchlist. Please try again."
+    type="error"
+    duration={3000}
+    onClose={() => setLoadingError(false)}
+  />
+)}
 
-{!loading && !error && movieData.length===0 && <p className="empty-msg">Your watchlist is ready for its first movie</p>}
+{!loading && !loadingError && movieData.length===0 && <p className="empty-msg">Your watchlist is ready for its first movie</p>}
 <MovieTileGrid deleteFromWatchlist={deletePressed} watchlist = {movieData} />
     </>
   );
