@@ -120,9 +120,12 @@ function App() {
         Current Watchlist
       </h2>
 
-      {loading && <p style={{textAlign : 'center' , fontSize : '2rem'}}>Loading...</p>}
-      {error && <p style={{textAlign : 'center' , fontSize : '1.5rem', color: 'red'}}>Failed to load watchlist. Try Reloading</p>}
-      <MovieTileGrid deleteFromWatchlist={deletePressed} watchlist = {movieData} />
+      {loading && <p className="loading-msg">Loading...</p>}
+      {/* General error when fetching watchlist */}
+{error && <p className="error-msg">Failed to load watchlist. Please try again.</p>}
+
+{!loading && !error && movieData.length===0 && <p className="empty-msg">Your watchlist is ready for its first movie</p>}
+<MovieTileGrid deleteFromWatchlist={deletePressed} watchlist = {movieData} />
     </>
   );
 }

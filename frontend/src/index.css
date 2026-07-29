@@ -168,3 +168,63 @@ body {
   align-items: start;
   padding: 20px 40px;
 }
+
+.loading-msg {
+  text-align: center;
+  font-size: 2rem;
+  color: beige;
+}
+
+.error-msg {
+  text-align: center;
+  font-size: 1.5rem;
+  color: red;
+}
+
+.empty-msg {
+  text-align: center;
+  font-size: 1.5rem;
+  color: gray;
+}
+
+/* Card layout for each movie tile */
+.movie-card {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 12px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s ease;
+}
+.movie-card:hover {
+  transform: scale(1.1);
+}
+
+/* Toggle button for details */
+.detail-toggle {
+  background: transparent;
+  border: none;
+  color: #c8922a;
+  cursor: pointer;
+  font-size: 0.9rem;
+  margin-top: 6px;
+}
+
+/* Details container, hidden by default */
+.detail-card {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease;
+  font-size: 0.85rem;
+  color: beige;
+  margin-top: 8px;
+}
+.detail-card.expanded {
+  max-height: 500px; /* enough space for content */
+  overflow-y: auto;
+}
+
+.detail-row {
+  margin-bottom: 4px;
+}

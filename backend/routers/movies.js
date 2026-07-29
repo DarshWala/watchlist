@@ -50,11 +50,23 @@ router.post("/", async (req, res) => {
       const usefulData = omdbData.Search[0];
       // console.log(usefuxlData);
 
-      const movie = {
-        name: usefulData.Title,
-        watched: false,
-        image: usefulData.Poster,
-      };
+       // Fetch full movie details using imdbID
+       const imdbID = usefulData.imdbID;
+       const detailRes = await fetch(`https://www.omdbapi.com/?apikey=${OMDB_API}&i=${imdbID}&plot=short`);
+       let detailed = {};
+       if (detailRes.ok) {
+         detailed = await detailRes.json();
+       }
+       const movie = {
+         name: usefulData.Title,
+         image: usefulData.Poster,
+         year: detailed.Year,
+         type: detailed.Type,
+         imdbRating: detailed.imdbRating,
+         plot: detailed.Plot,
+         genres: detailed.Genre,
+         runtime: detailed.Runtime,
+       };
 
       // console.log(movie);
 

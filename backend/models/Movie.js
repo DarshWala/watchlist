@@ -13,7 +13,13 @@ const movieSchema = new mongoose.Schema({
   image: {
     type: String,
     trim: true,
-  }
+  },
+  year: { type: String },
+  type: { type: String },
+  imdbRating: { type: String },
+  plot: { type: String },
+  genres: { type: String },
+  runtime: { type: String }
 }, {
   timestamps: true 
 });
