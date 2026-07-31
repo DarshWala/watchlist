@@ -1,25 +1,49 @@
-body {
-  background-color: rgb(39, 39, 39);
-  color: beige;
+:root {
+  /* Color palette */
+  --bg-color: #272727; /* original rgb(39,39,39) */
+  --text-color: #f5f5dc; /* beige */
+  --primary-color: #c8922a; /* accent */
+  --primary-hover: #e0a535;
+  --error-color: #c82828;
+  --success-color: #1c8c50;
+  --info-color: #2864c8;
+  --overlay-bg: rgba(255,255,255,0.15);
+  --card-bg: rgba(255,255,255,0.08);
+  --glass-blur: 12px;
+  --border-color: rgba(245, 245, 220, 0.2);
+  --border-color-light: rgba(245, 245, 220, 0.07);
+  /* Font families */
+  --font-heading: "cursive", sans-serif;
+  --font-mono: "monospace", monospace;
 }
 
+/* Global styles */
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  margin: 0;
+  font-family: var(--font-mono);
+}
+
+/* Headings */
 .main-heading {
   justify-self: center;
-  font-family: cursive;
+  font-family: var(--font-heading);
 }
 
+/* Form section */
 .movie-form-sec {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 0px;
+  gap: 0;
 }
 
 .movie-form-sec h2 {
-  font-family: cursive;
+  font-family: var(--font-heading);
   font-size: 1.4rem;
-  color: beige;
+  color: var(--text-color);
   margin-bottom: 10px;
   letter-spacing: 0.05em;
 }
@@ -27,20 +51,20 @@ body {
 .movie-form-sec form {
   display: flex;
   gap: 0;
-  border: 1px solid rgba(245, 245, 220, 0.2);
+  border: 1px solid var(--border-color);
   border-radius: 4px;
   overflow: hidden;
 }
 
 .movie-form-sec input[type="text"] {
-  background-color: rgb(50, 50, 50);
-  color: beige;
+  background-color: #323232; /* original rgb(50,50,50) */
+  color: var(--text-color);
   border: none;
   outline: none;
   padding: 10px 16px;
   font-size: 0.95rem;
   width: 260px;
-  font-family: monospace;
+  font-family: var(--font-mono);
   letter-spacing: 0.03em;
 }
 
@@ -49,17 +73,17 @@ body {
 }
 
 .movie-form-sec input[type="text"]:focus {
-  background-color: rgb(58, 58, 58);
+  background-color: #3a3a3a; /* original rgb(58,58,58) */
 }
 
 .movie-form-sec button[type="submit"] {
-  background-color: #c8922a;
-  color: rgb(30, 30, 30);
+  background-color: var(--primary-color);
+  color: #1e1e1e;
   border: none;
   padding: 10px 20px;
   font-size: 0.9rem;
   font-weight: 700;
-  font-family: monospace;
+  font-family: var(--font-mono);
   letter-spacing: 0.08em;
   cursor: pointer;
   transition: background-color 0.2s ease;
@@ -67,12 +91,10 @@ body {
 }
 
 .movie-form-sec button[type="submit"]:hover {
-  background-color: #e0a535;
+  background-color: var(--primary-hover);
 }
 
-
-
-
+/* Tile component */
 .tile-div {
   padding: 5px;
   overflow: hidden;
@@ -83,7 +105,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid rgba(245, 245, 220, 0.07);
+  border: 1px solid var(--border-color-light);
   transition: border-color 0.25s ease;
 }
 
@@ -109,7 +131,7 @@ body {
   top: 5px;
   width: 75%;
   height: calc(100% - 10px);
-  color: beige;
+  color: var(--text-color);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -130,23 +152,24 @@ body {
 .tile-title {
   margin: 0 0 14px 0;
   font-size: 1rem;
-  font-family: monospace;
+  font-family: var(--font-mono);
   font-weight: bold;
   letter-spacing: 0.04em;
   word-break: break-word;
-  color: beige;
-  text-shadow: 0 1px 4px rgba(0,0,0,0.8);
+  color: var(--text-color);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
 }
 
+/* Delete button */
 .delete-btn {
   background-color: transparent;
-  color: #c8922a;
-  border: 1px solid #c8922a;
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
   padding: 7px 14px;
   border-radius: 3px;
   cursor: pointer;
   font-size: 0.78rem;
-  font-family: monospace;
+  font-family: var(--font-mono);
   font-weight: 700;
   letter-spacing: 0.07em;
   text-transform: uppercase;
@@ -154,12 +177,11 @@ body {
 }
 
 .delete-btn:hover {
-  background-color: #c8922a;
-  color: rgb(30, 30, 30);
+  background-color: var(--primary-color);
+  color: #1e1e1e;
 }
 
-
-
+/* Grid layout */
 .tile-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -169,27 +191,31 @@ body {
   padding: 20px 40px;
 }
 
-.loading-msg {
+/* Status messages */
+.loading-msg,
+.error-msg,
+.empty-msg {
   text-align: center;
+}
+
+.loading-msg {
   font-size: 2rem;
-  color: beige;
+  color: var(--text-color);
 }
 
 .error-msg {
-  text-align: center;
   font-size: 1.5rem;
-  color: red;
+  color: var(--error-color);
 }
 
 .empty-msg {
-  text-align: center;
   font-size: 1.5rem;
   color: gray;
 }
 
-/* Card layout for each movie tile */
+/* Card layout */
 .movie-card {
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--card-bg);
   backdrop-filter: blur(10px);
   border-radius: 12px;
   padding: 12px;
@@ -197,31 +223,33 @@ body {
   overflow: hidden;
   transition: transform 0.2s ease;
 }
+
 .movie-card:hover {
   transform: scale(1.1);
 }
 
-/* Toggle button for details */
+/* Detail toggle */
 .detail-toggle {
   background: transparent;
   border: none;
-  color: #c8922a;
+  color: var(--primary-color);
   cursor: pointer;
   font-size: 0.9rem;
   margin-top: 6px;
 }
 
-/* Details container, hidden by default */
+/* Details container */
 .detail-card {
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.5s ease;
   font-size: 0.85rem;
-  color: beige;
+  color: var(--text-color);
   margin-top: 8px;
 }
+
 .detail-card.expanded {
-  max-height: 500px; /* enough space for content */
+  max-height: 500px;
   overflow-y: auto;
 }
 
@@ -229,7 +257,7 @@ body {
   margin-bottom: 4px;
 }
 
-/* ── Toast Notifications ───────────────────────────────────────────── */
+/* Toast notifications */
 .toast {
   position: fixed;
   bottom: 32px;
@@ -243,10 +271,10 @@ body {
   min-width: 280px;
   max-width: 420px;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(12px);
+  backdrop-filter: blur(var(--glass-blur));
   animation: toast-slide-in 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
   z-index: 9999;
-  font-family: monospace;
+  font-family: var(--font-mono);
 }
 
 @keyframes toast-slide-in {
@@ -260,7 +288,6 @@ body {
   }
 }
 
-/* Variants */
 .toast--error {
   background: rgba(200, 40, 40, 0.88);
   border: 1px solid rgba(255, 80, 80, 0.4);
@@ -289,7 +316,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.15);
+  background: var(--overlay-bg);
 }
 
 .toast__message {
@@ -314,5 +341,5 @@ body {
 
 .toast__close:hover {
   opacity: 1;
-  background: rgba(255, 255, 255, 0.15);
+  background: var(--overlay-bg);
 }
