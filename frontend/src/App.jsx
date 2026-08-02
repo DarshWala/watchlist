@@ -92,34 +92,34 @@ function App() {
     } finally {
       setIsSearching(false);
     }
+  }
 
-    async function addToWatchlist(selectedMovie) {
-      try {
-        const response = await fetch(
-          `${import.meta.env.VITE_API_URL}/watchlist`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              imdbId: selectedMovie.imdbID,
-            }),
+  async function addToWatchlist(selectedMovie) {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/watchlist`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
           },
-        );
+          body: JSON.stringify({
+            imdbId: selectedMovie.imdbID,
+          }),
+        },
+      );
 
-        const savedMovie = await response.json();
+      const savedMovie = await response.json();
 
-        if (!response.ok) {
-          throw new Error(savedMovie.message || "Could not add movie");
-        }
-
-        setMovieData((currentMovies) => [...currentMovies, savedMovie]);
-        setShowSearchRes(false);
-        setSearchRes([]);
-      } catch (error) {
-        console.error("Add movie error:", error.message);
+      if (!response.ok) {
+        throw new Error(savedMovie.message || "Could not add movie");
       }
+
+      setMovieData((currentMovies) => [...currentMovies, savedMovie]);
+      setShowSearchRes(false);
+      setSearchRes([]);
+    } catch (error) {
+      console.error("Add movie error:", error.message);
     }
   }
 
