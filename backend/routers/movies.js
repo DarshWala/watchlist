@@ -19,6 +19,34 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.get("/search", async (req, res) => {
+  const title = req.query.name;
+
+  if (!title?.trim()) {
+    return res.status(400).json({ message: "Movie name is required" });
+  }
+
+  try {
+    const omdbRes = await fetch(
+      `https://www.omdbapi.com/?apikey=${OMDB_API}&s=${encodeURIComponent(title)}`,
+    );
+
+    if (!omdbRes.ok) {
+      return res.status(502).json({ message: "Could not reach OMDb" });
+    }
+
+    const omdbData = await omdbRes.json();
+
+    if (omdbData.Response === "False") {
+      return res.status(404).json({ message: omdbData.Error });
+    }
+
+    return res.status(200).json(omdbData.Search.slice(0, 6));
+  } catch (error) {
+    return res.status(500).json({ message: "Movie search failed" });
+  }
+});
+
 // GET single movie by ID
 router.get("/:id", async (req, res) => {
   try {
@@ -32,54 +60,58 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-// POST add a movie to watchlist (fetches poster from OMDb if image not provided)
 router.post("/", async (req, res) => {
+  const { imdbId } = req.body;
+
+  if (!imdbId) {
+    return res.status(400).json({
+      message: "IMDb ID is required",
+    });
+  }
+
   try {
-    const title = req.body.name;
-    if (!title) {
-      res.status(400).json({ msg: "movie name is required" });
+    const existingMovie = await Movie.findOne({ imdbId });
+
+    if (existingMovie) {
+      return res.status(409).json({
+        message: "This movie is already in your watchlist",
+      });
     }
 
     const omdbRes = await fetch(
-      `https://www.omdbapi.com/?apikey=${OMDB_API}&s=${encodeURIComponent(title)}`,
+      `https://www.omdbapi.com/?apikey=${OMDB_API}&i=${encodeURIComponent(imdbId)}&plot=full`,
     );
 
-    if (omdbRes.ok) {
-      const omdbData = await omdbRes.json();
-
-      const usefulData = omdbData.Search[0];
-      // console.log(usefuxlData);
-
-       // Fetch full movie details using imdbID
-       const imdbID = usefulData.imdbID;
-       const detailRes = await fetch(`https://www.omdbapi.com/?apikey=${OMDB_API}&i=${imdbID}&plot=short`);
-       let detailed = {};
-       if (detailRes.ok) {
-         detailed = await detailRes.json();
-       }
-       const movie = {
-         name: usefulData.Title,
-         image: usefulData.Poster,
-         year: detailed.Year,
-         type: detailed.Type,
-         imdbRating: detailed.imdbRating,
-         plot: detailed.Plot,
-         genres: detailed.Genre,
-         runtime: detailed.Runtime,
-       };
-
-      // console.log(movie);
-
-      const savedMovie = await Movie.create(movie);
-      return res.status(201).json(savedMovie);
-    }
     if (!omdbRes.ok) {
-      console.log("Error Occured");
+      return res.status(502).json({ message: "Could not reach OMDb" });
     }
+
+    const omdbMovie = await omdbRes.json();
+
+    if (omdbMovie.Response === "False") {
+      return res.status(404).json({ message: omdbMovie.Error });
+    }
+
+    const savedMovie = await Movie.create({
+      imdbId: omdbMovie.imdbID,
+      name: omdbMovie.Title,
+      image: omdbMovie.Poster,
+      year: omdbMovie.Year,
+      type: omdbMovie.Type,
+      imdbRating: omdbMovie.imdbRating,
+      plot: omdbMovie.Plot,
+      genres: omdbMovie.Genre,
+      runtime: omdbMovie.Runtime,
+    });
+
+    return res.status(201).json(savedMovie);
   } catch (error) {
-    throw new Error(error);
+    return res.status(500).json({
+      message: "Could not save movie",
+    });
   }
 });
+
 
 router.delete("/", async (req, res) => {
   const id = req.body.id;

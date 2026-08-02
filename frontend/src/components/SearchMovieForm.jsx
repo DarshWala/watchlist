@@ -4,11 +4,11 @@ export default function AddMovieForm(props) {
 
   return (
     <section className="movie-form-sec">
-      <h2>Add Movie</h2>
+      <h2>Search</h2>
       {/* <br></br> */}
       <form onSubmit={props.formAction}>
         <input type="text" name="movie-query" placeholder="enter movie name "></input>
-        <button type="submit">Add</button>
+        <button type="submit">Search</button>
       </form>
     </section>
   );

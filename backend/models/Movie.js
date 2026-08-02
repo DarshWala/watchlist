@@ -1,6 +1,12 @@
 import mongoose from 'mongoose';
 
 const movieSchema = new mongoose.Schema({
+  imdbId: {
+    type: String,
+    required: true,
+    unique: true,
+    trim: true,
+  },
   name: {
     type: String,
     required: true,

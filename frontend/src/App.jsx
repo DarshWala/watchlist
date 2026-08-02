@@ -1,62 +1,67 @@
 import React from "react";
-import AddMovieForm from "./components/addMovieForm";
+import AddMovieForm from "./components/SearchMovieForm";
 import MovieTileGrid from "./components/movieTileGrid";
 import Toast from "./components/Toast";
+import SearchMovieTileGrid from "./components/SearchMovieTileGrid";
+
+
 function App() {
   const [movieData, setMovieData] = React.useState([]);
-  const [loading , setLoading] = React.useState(true);
-  const [loadingError , setLoadingError] = React.useState(false);
+  const [loading, setLoading] = React.useState(true);
+  const [loadingError, setLoadingError] = React.useState(false);
 
-  const [addError , setAddError] = React.useState(false);
-  
+  const [addError, setAddError] = React.useState(false);
+
+  const [showSearchRes, setShowSearchRes] = React.useState(false);
+  const [searchRes , setSearchRes] = React.useState([]);
+
   // console.log(movieData);
 
   // let data;
 
-  async function addMovie(e) {
-    e.preventDefault();
-    const formData = new FormData(e.target);
-    const query = formData.get("movie-query");
-    console.log(`user searched for ${query}`);
+  // async function addMovie(e) {
+  //   e.preventDefault();
+  //   const formData = new FormData(e.target);
+  //   const query = formData.get("movie-query");
+  //   console.log(`user searched for ${query}`);
 
-    const queryToSend = { name: query };
-    // console.log(queryToSend);
+  //   const queryToSend = { name: query };
+  //   // console.log(queryToSend);
 
-    // console.log(JSON.stringify(queryToSend));
+  //   // console.log(JSON.stringify(queryToSend));
 
-    try {
-      const resFromBack = await fetch(`${import.meta.env.VITE_API_URL}/watchlist`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(queryToSend),
-      });
+  //   try {
+  //     const resFromBack = await fetch(`${import.meta.env.VITE_API_URL}/watchlist`, {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify(queryToSend),
+  //     });
 
-      if (!resFromBack.ok) {
-        console.log("Network Error");
-        setAddError(true)
-        setLoading(false)
-      } else {
-        const data = await resFromBack.json();
-        console.log(data);
-        setMovieData((prevData) => [...prevData , data]);
-        console.log('movie added');
-        
-        // setLoading(false)
-        // console.log(movieData);
-      }
-    } catch (error) {
-      console.log(`Error ${error}`);
-      setAddError(true)
-    }
+  //     if (!resFromBack.ok) {
+  //       console.log("Network Error");
+  //       setAddError(true)
+  //       setLoading(false)
+  //     } else {
+  //       const data = await resFromBack.json();
+  //       console.log(data);
+  //       setMovieData((prevData) => [...prevData , data]);
+  //       console.log('movie added');
 
-    e.target.reset();
+  //       // setLoading(false)
+  //       // console.log(movieData);
+  //     }
+  //   } catch (error) {
+  //     console.log(`Error ${error}`);
+  //     setAddError(true)
+  //   }
 
-    // getting all movies for updating state
-  }
+  //   e.target.reset();
 
-  
+  //   // getting all movies for updating state
+  // }
+
   async function deletePressed(_id) {
     const elementIdToDelete = { id: _id };
 
@@ -83,7 +88,6 @@ function App() {
     }
   }
 
-
   React.useEffect(() => {
     async function fetchWatchlist() {
       try {
@@ -105,13 +109,86 @@ function App() {
     fetchWatchlist();
   }, []);
 
-  //! this is for testing if the state updates or not
-  // console.log(movieData);
+
+
+//! Display Search Results where the user can choose
+  async function searchMovie(e) {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const query = formData.get("movie-query");
+    // console.log(`user searched for ${query}`);
+    
+    try {
+      const firstSixRes = await fetch(
+        `${import.meta.env.VITE_API_URL}/watchlist/search?name=${encodeURIComponent(query)}`,
+      );
+
+      const firstSixResData = await firstSixRes.json();
+
+      if (!firstSixRes.ok) {
+        throw new Error(
+          firstSixResData.message || "Failed to search for movies",
+        );
+      }
+
+      setSearchRes(firstSixResData);
+      setShowSearchRes(true);
+    } catch (error) {
+      console.error("Movie search error:", error.message);
+      setShowSearchRes(false);
+    }
+  }
+
+  async function addToWatchlist(selectedMovie) {
+  try {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/watchlist`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        imdbId: selectedMovie.imdbID,
+      }),
+    });
+
+    const savedMovie = await response.json();
+
+    if (!response.ok) {
+      throw new Error(savedMovie.message || "Could not add movie");
+    }
+
+    setMovieData((currentMovies) => [...currentMovies, savedMovie]);
+    setShowSearchRes(false);
+    setSearchRes([]);
+  } catch (error) {
+    console.error("Add movie error:", error.message);
+  }
+}
+
+  
+// Poster
+// : 
+// "https://m.media-amazon.com/images/M/MV5BZDAxMWZjMTgtNDdkMC00YmI5LWFkNzYtOTA0NDMwNjE2Y2MzXkEyXkFqcGc@._V1_SX300.jpg"
+// Title
+// : 
+// "Fist of Fury"
+// Type
+// : 
+// "movie"
+// Year
+// : 
+// "1972"
+// imdbID
+// : 
+// "tt0068767"
+
 
   return (
     <>
       <h1 className="main-heading">WATCHLIST</h1>
-      <AddMovieForm formAction={addMovie} />
+      <AddMovieForm formAction={searchMovie} />
+
+      {showSearchRes && <SearchMovieTileGrid searchRes={searchRes} addToWatchlist={addToWatchlist}/>}
 
       {addError && (
         <Toast
@@ -135,17 +212,22 @@ function App() {
 
       {loading && <p className="loading-msg">Loading...</p>}
       {/* General error when fetching watchlist */}
-{loadingError && (
-  <Toast
-    message="Failed to load watchlist. Please try again."
-    type="error"
-    duration={3000}
-    onClose={() => setLoadingError(false)}
-  />
-)}
+      {loadingError && (
+        <Toast
+          message="Failed to load watchlist. Please try again."
+          type="error"
+          duration={3000}
+          onClose={() => setLoadingError(false)}
+        />
+      )}
 
-{!loading && !loadingError && movieData.length===0 && <p className="empty-msg">Your watchlist is ready for its first movie</p>}
-<MovieTileGrid deleteFromWatchlist={deletePressed} watchlist = {movieData} />
+      {!loading && !loadingError && movieData.length === 0 && (
+        <p className="empty-msg">Your watchlist is ready for its first movie</p>
+      )}
+      <MovieTileGrid
+        deleteFromWatchlist={deletePressed}
+        watchlist={movieData}
+      />
     </>
   );
 }
