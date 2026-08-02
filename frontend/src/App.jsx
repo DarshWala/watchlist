@@ -95,6 +95,14 @@ function App() {
   }
 
   async function addToWatchlist(selectedMovie) {
+
+    movieData.map((movie) => {
+      if(movie.id == selectedMovie){
+        console.log(`already there`);
+        return;        
+      }
+    })
+
     try {
       const response = await fetch(
         `${import.meta.env.VITE_API_URL}/watchlist`,
@@ -120,6 +128,7 @@ function App() {
       setSearchRes([]);
     } catch (error) {
       console.error("Add movie error:", error.message);
+
     }
   }
 

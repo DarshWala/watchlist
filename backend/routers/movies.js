@@ -85,7 +85,7 @@ router.post("/", async (req, res) => {
     }
 
     const omdbRes = await fetch(
-      `https://www.omdbapi.com/?apikey=${OMDB_API}&i=${encodeURIComponent(imdbId)}&plot=full`,
+      `https://www.omdbapi.com/?apikey=${OMDB_API}&i=${encodeURIComponent(imdbId)}&plot=short`,
     );
 
     if (!omdbRes.ok) {
