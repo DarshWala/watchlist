@@ -13,7 +13,8 @@ function App() {
   const [addError, setAddError] = React.useState(false);
 
   const [showSearchRes, setShowSearchRes] = React.useState(false);
-  const [searchRes , setSearchRes] = React.useState([]);
+  const [searchRes, setSearchRes] = React.useState([]);
+  const [isSearching, setIsSearching] = React.useState(false);
 
   // console.log(movieData);
 
@@ -116,8 +117,9 @@ function App() {
     e.preventDefault();
     const formData = new FormData(e.target);
     const query = formData.get("movie-query");
-    // console.log(`user searched for ${query}`);
-    
+
+    setIsSearching(true);
+
     try {
       const firstSixRes = await fetch(
         `${import.meta.env.VITE_API_URL}/watchlist/search?name=${encodeURIComponent(query)}`,
@@ -136,6 +138,8 @@ function App() {
     } catch (error) {
       console.error("Movie search error:", error.message);
       setShowSearchRes(false);
+    } finally {
+      setIsSearching(false);
     }
   }
 
@@ -186,7 +190,7 @@ function App() {
   return (
     <>
       <h1 className="main-heading">WATCHLIST</h1>
-      <AddMovieForm formAction={searchMovie} />
+      <AddMovieForm formAction={searchMovie} isSearching={isSearching} />
 
       {showSearchRes && <SearchMovieTileGrid searchRes={searchRes} addToWatchlist={addToWatchlist}/>}
 

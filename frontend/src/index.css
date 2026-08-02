@@ -94,6 +94,29 @@ body {
   background-color: var(--primary-hover);
 }
 
+.movie-form-sec button[type="submit"]:disabled {
+  cursor: wait;
+  opacity: 0.75;
+}
+
+.button-loader {
+  animation: button-loader-spin 0.7s linear infinite;
+  border: 2px solid rgb(30 30 30 / 0.3);
+  border-radius: 50%;
+  border-top-color: #1e1e1e;
+  display: inline-block;
+  height: 0.8rem;
+  margin-left: 6px;
+  vertical-align: -0.1rem;
+  width: 0.8rem;
+}
+
+@keyframes button-loader-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 /* Tile component */
 .tile-div {
   padding: 5px;
@@ -180,6 +203,8 @@ body {
   background-color: var(--primary-color);
   color: #1e1e1e;
 }
+
+
 
 /* Grid layout */
 .tile-grid {
