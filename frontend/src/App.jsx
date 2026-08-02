@@ -10,6 +10,7 @@ function App() {
   const [loadingError, setLoadingError] = React.useState(false);
 
   const [addError, setAddError] = React.useState(false);
+  const [alreadyInWatchlist, setAlreadyInWatchlist] = React.useState(false);
 
   const [searchError, setSearchError] = React.useState(false);
   const [showSearchRes, setShowSearchRes] = React.useState(false);
@@ -95,13 +96,14 @@ function App() {
   }
 
   async function addToWatchlist(selectedMovie) {
+    const isAlreadyInWatchlist = movieData.some(
+      (movie) => (movie.imdbId || movie.imdbID) === selectedMovie.imdbID
+    );
 
-    movieData.map((movie) => {
-      if(movie.id == selectedMovie){
-        console.log(`already there`);
-        return;        
-      }
-    })
+    if (isAlreadyInWatchlist) {
+      setAlreadyInWatchlist(true);
+      return;
+    }
 
     try {
       const response = await fetch(
@@ -119,7 +121,13 @@ function App() {
 
       const savedMovie = await response.json();
 
+      if (response.status === 409) {
+        setAlreadyInWatchlist(true);
+        return;
+      }
+
       if (!response.ok) {
+        setAddError(true);
         throw new Error(savedMovie.message || "Could not add movie");
       }
 
@@ -128,7 +136,6 @@ function App() {
       setSearchRes([]);
     } catch (error) {
       console.error("Add movie error:", error.message);
-
     }
   }
 
@@ -160,6 +167,15 @@ function App() {
           type="error"
           duration={3000}
           onClose={() => setAddError(false)}
+        />
+      )}
+
+      {alreadyInWatchlist && (
+        <Toast
+          message="Movie already in watchlist"
+          type="info"
+          duration={3000}
+          onClose={() => setAlreadyInWatchlist(false)}
         />
       )}
 
