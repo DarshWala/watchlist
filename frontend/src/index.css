@@ -205,6 +205,30 @@ body {
 }
 
 
+/* IMAGE MISSING PLACEHOLDER */
+
+.poster-placeholder {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  display: grid;
+  place-items: center;
+  gap: 8px;
+  padding: 16px;
+  box-sizing: border-box;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(200, 146, 42, 0.12),
+      rgba(255, 255, 255, 0.03)
+    );
+  border: 1px solid var(--border-color);
+  color: rgba(245, 245, 220, 0.65);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  text-align: center;
+}
+
 
 /* Grid layout */
 .tile-grid {

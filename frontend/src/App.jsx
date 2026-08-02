@@ -126,6 +126,7 @@ function App() {
       );
 
       const firstSixResData = await firstSixRes.json();
+      
 
       if (!firstSixRes.ok) {
         throw new Error(
