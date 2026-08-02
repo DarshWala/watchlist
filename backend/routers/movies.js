@@ -36,8 +36,12 @@ router.get("/search", async (req, res) => {
     }
 
     const omdbData = await omdbRes.json();
-    console.log(omdbData);
-    
+
+    if (omdbData.Response === "False") {
+      return res.status(404).json({
+        message: omdbData.Error || "No movies found",
+      });
+    }
 
     if (omdbData.Response === "False") {
       return res.status(404).json({ message: omdbData.Error });
@@ -113,7 +117,6 @@ router.post("/", async (req, res) => {
     });
   }
 });
-
 
 router.delete("/", async (req, res) => {
   const id = req.body.id;
