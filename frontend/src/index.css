@@ -584,3 +584,46 @@ body {
   color: #1e1e1e;
 }
 
+/* ---- Watched Corner Button ---- */
+.watched-corner-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 10;
+  width: 64px;
+  height: 28px;
+  background-color: rgba(30, 30, 30, 0.75);
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 0.65rem;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  backdrop-filter: blur(6px);
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.watched-corner-btn:hover {
+  background-color: var(--primary-color);
+  color: #1e1e1e;
+}
+
+.watched-corner-btn.is-watched {
+  background-color: rgba(28, 140, 80, 0.85);
+  border-color: #1c8c50;
+  color: #e0ffe8;
+}
+
+.watched-corner-btn.is-watched:hover {
+  background-color: rgba(200, 40, 40, 0.85);
+  border-color: var(--error-color);
+  color: #ffe5e5;
+}
+
+

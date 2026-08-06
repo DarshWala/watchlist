@@ -21,6 +21,18 @@ export default function MovieTile(props) {
   return (
     <div className="movie-card tile-div">
       <img src={image} alt={name || "movie poster"} />
+
+      {/* Always-visible watched toggle — top-right corner */}
+      {changeWatchedStatus && (
+        <button
+          className={`watched-corner-btn ${watched ? "is-watched" : ""}`}
+          onClick={() => changeWatchedStatus(id)}
+          title={watched ? "Mark as Unwatched" : "Mark as Watched"}
+        >
+          {watched ? "✓ Watched" : "Watch"}
+        </button>
+      )}
+
       <div className="tile-overlay">
         <p className="tile-title">{name}</p>
 
@@ -33,8 +45,6 @@ export default function MovieTile(props) {
           </button>
         )}
 
-      {/* watched status changer */}
-        <button onClick={ () => changeWatchedStatus(id) }> {watched ? `mark as unwatched` : `mark as watched`} </button>
 
         {addToWatchList && (
           <button onClick={() => addToWatchList(id)} className="add-btn">

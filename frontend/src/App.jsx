@@ -237,7 +237,7 @@ function App() {
       <MovieTileGrid
         deleteFromWatchlist={deletePressed}
         changeWatchedStatus={changeWatchedStatus}
-        MoviesList={movieData}
+        MoviesList={movieData.filter((m) => !m.watched)}
       />
 
       <RecentlyWatched
