@@ -16,6 +16,12 @@ const movieSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+
+  watchedAt:{
+    type : Date,
+    default : null
+  },
+
   image: {
     type: String,
     trim: true,

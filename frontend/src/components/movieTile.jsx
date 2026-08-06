@@ -13,6 +13,8 @@ export default function MovieTile(props) {
     runtime,
     deleteFromWatchlist,
     addToWatchList,
+    watched,
+    changeWatchedStatus,
   } = props;
   const [expanded, setExpanded] = React.useState(false);
 
@@ -30,6 +32,9 @@ export default function MovieTile(props) {
             Remove from Watchlist
           </button>
         )}
+
+      {/* watched status changer */}
+        <button onClick={ () => changeWatchedStatus(id) }> {watched ? `mark as unwatched` : `mark as watched`} </button>
 
         {addToWatchList && (
           <button onClick={() => addToWatchList(id)} className="add-btn">

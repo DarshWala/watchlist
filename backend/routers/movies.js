@@ -118,6 +118,24 @@ router.post("/", async (req, res) => {
   }
 });
 
+// PATCH toggle watched status
+router.patch("/:id/watched", async (req, res) => {
+  try {
+    const movie = await Movie.findById(req.params.id);
+    if (!movie) {
+      return res.status(404).json({ message: "Movie not found" });
+    }
+
+    movie.watched = !movie.watched;
+    movie.watchedAt = movie.watched ? new Date() : null;
+    await movie.save();
+
+    return res.status(200).json(movie);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+});
+
 router.delete("/", async (req, res) => {
   const id = req.body.id;
 

@@ -3,6 +3,7 @@ import AddMovieForm from "./components/SearchMovieForm";
 import MovieTileGrid from "./components/movieTileGrid";
 import Toast from "./components/Toast";
 import SearchMovieTileGrid from "./components/SearchMovieTileGrid";
+import RecentlyWatched from "./components/RecentlyWatched";
 
 function App() {
   const [movieData, setMovieData] = React.useState([]);
@@ -139,6 +140,35 @@ function App() {
     }
   }
 
+  async function changeWatchedStatus(id) {
+    try {
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL}/watchlist/${id}/watched`,
+        { method: "PATCH" }
+      );
+
+      if (!res.ok) {
+        console.error("Failed to toggle watched status");
+        return;
+      }
+
+      const updatedMovie = await res.json();
+
+      // update just that one movie in state
+      setMovieData((prev) =>
+        prev.map((movie) => (movie._id === id ? updatedMovie : movie))
+      );
+    } catch (error) {
+      console.error("changeWatchedStatus error:", error.message);
+    }
+  }
+
+  //! Derived — no extra state needed, recomputes whenever movieData changes
+  const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
+  const recentlyWatched = movieData
+    .filter((m) => m.watched && m.watchedAt && new Date(m.watchedAt) >= thirtyDaysAgo)
+    .sort((a, b) => new Date(b.watchedAt) - new Date(a.watchedAt));
+
   //!  ---------------------- RETURN --------------------------------------------------------
 
   return (
@@ -206,7 +236,13 @@ function App() {
       )}
       <MovieTileGrid
         deleteFromWatchlist={deletePressed}
-        watchlist={movieData}
+        changeWatchedStatus={changeWatchedStatus}
+        MoviesList={movieData}
+      />
+
+      <RecentlyWatched
+        recentlyWatched={recentlyWatched}
+        changeWatchedStatus={changeWatchedStatus}
       />
     </>
   );
