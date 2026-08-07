@@ -4,22 +4,21 @@ export default function SearchMovieForm({ formAction, isSearching }) {
 
   return (
     <section className="movie-form-sec">
-      <h2>Search</h2>
-      {/* <br></br> */}
+      <span className="section-label">SEARCH & ADD</span>
       <form onSubmit={formAction}>
         <input
           type="text"
           name="movie-query"
-          placeholder="enter movie name"
+          placeholder="Movie or series title..."
           disabled={isSearching}
         />
         <button type="submit" disabled={isSearching}>
           {isSearching ? (
             <>
-              Searching <span className="button-loader" aria-hidden="true" />
+              SEARCHING <span className="button-loader" aria-hidden="true" />
             </>
           ) : (
-            "Search"
+            "SEARCH"
           )}
         </button>
       </form>

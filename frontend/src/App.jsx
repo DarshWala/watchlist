@@ -173,7 +173,10 @@ function App() {
 
   return (
     <>
-      <h1 className="main-heading">WATCHLIST</h1>
+      <header className="app-header">
+        <h1 className="main-heading">WATCHLIST</h1>
+        <p className="tagline">YOUR PERSONAL CINEMA QUEUE</p>
+      </header>
       <AddMovieForm formAction={searchMovie} isSearching={isSearching} />
 
       {searchError && (
@@ -209,16 +212,11 @@ function App() {
         />
       )}
 
-      <h2
-        style={{
-          textAlign: "center",
-          fontFamily: "monospace",
-          color: "aliceblue",
-          fontSize: 35,
-        }}
-      >
-        Current Watchlist
-      </h2>
+      <div className="watchlist-header">
+        <h2 className="watchlist-header-title">CURRENT WATCHLIST</h2>
+        <hr className="watchlist-header-line" />
+        <p className="watchlist-header-count">{movieData.length} {movieData.length === 1 ? "title" : "titles"}</p>
+      </div>
 
       {loading && <p className="loading-msg">Loading...</p>}
       {/* General error when fetching watchlist */}
@@ -232,7 +230,13 @@ function App() {
       )}
 
       {!loading && !loadingError && movieData.length === 0 && (
-        <p className="empty-msg">Your watchlist is ready for its first movie</p>
+        <div className="empty-msg-container">
+          <svg className="empty-state-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M19.82 2H4.18C2.97 2 2 2.97 2 4.18v15.64C2 21.03 2.97 22 4.18 22h15.64c1.21 0 2.18-.97 2.18-2.18V4.18C22 2.97 21.03 2 19.82 2Z"></path>
+            <path d="M7 2v20M17 2v20M2 12h20M2 7h5M2 17h5M17 17h5M17 7h5"></path>
+          </svg>
+          <p className="empty-msg">Your queue is empty. Search to add titles.</p>
+        </div>
       )}
       <MovieTileGrid
         deleteFromWatchlist={deletePressed}
