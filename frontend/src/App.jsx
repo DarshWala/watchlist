@@ -98,7 +98,7 @@ function App() {
 
   async function addToWatchlist(selectedMovie) {
     const isAlreadyInWatchlist = movieData.some(
-      (movie) => (movie.imdbId || movie.imdbID) === selectedMovie.imdbID
+      (movie) => (movie.imdbId || movie.imdbID) === selectedMovie.imdbID,
     );
 
     if (isAlreadyInWatchlist) {
@@ -144,7 +144,7 @@ function App() {
     try {
       const res = await fetch(
         `${import.meta.env.VITE_API_URL}/watchlist/${id}/watched`,
-        { method: "PATCH" }
+        { method: "PATCH" },
       );
 
       if (!res.ok) {
@@ -156,7 +156,7 @@ function App() {
 
       // update just that one movie in state
       setMovieData((prev) =>
-        prev.map((movie) => (movie._id === id ? updatedMovie : movie))
+        prev.map((movie) => (movie._id === id ? updatedMovie : movie)),
       );
     } catch (error) {
       console.error("changeWatchedStatus error:", error.message);
@@ -166,8 +166,12 @@ function App() {
   //! Derived — no extra state needed, recomputes whenever movieData changes
   const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
   const recentlyWatched = movieData
-    .filter((m) => m.watched && m.watchedAt && new Date(m.watchedAt) >= thirtyDaysAgo)
+    .filter(
+      (m) => m.watched && m.watchedAt && new Date(m.watchedAt) >= thirtyDaysAgo,
+    )
     .sort((a, b) => new Date(b.watchedAt) - new Date(a.watchedAt));
+
+  const eleInTheWatchlist = movieData.length - recentlyWatched.length;
 
   //!  ---------------------- RETURN --------------------------------------------------------
 
@@ -215,7 +219,9 @@ function App() {
       <div className="watchlist-header">
         <h2 className="watchlist-header-title">CURRENT WATCHLIST</h2>
         <hr className="watchlist-header-line" />
-        <p className="watchlist-header-count">{movieData.length} {movieData.length === 1 ? "title" : "titles"}</p>
+        <p className="watchlist-header-count">
+          {eleInTheWatchlist} {eleInTheWatchlist === 1 ? "title" : "titles"}
+        </p>
       </div>
 
       {loading && <p className="loading-msg">Loading...</p>}
@@ -229,13 +235,19 @@ function App() {
         />
       )}
 
-      {!loading && !loadingError && movieData.length === 0 && (
+      {((!loading && !loadingError && movieData.length === 0 ) || eleInTheWatchlist === 0 ) && (
         <div className="empty-msg-container">
-          <svg className="empty-state-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <svg
+            className="empty-state-icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+          >
             <path d="M19.82 2H4.18C2.97 2 2 2.97 2 4.18v15.64C2 21.03 2.97 22 4.18 22h15.64c1.21 0 2.18-.97 2.18-2.18V4.18C22 2.97 21.03 2 19.82 2Z"></path>
             <path d="M7 2v20M17 2v20M2 12h20M2 7h5M2 17h5M17 17h5M17 7h5"></path>
           </svg>
-          <p className="empty-msg">Your queue is empty. Search to add titles.</p>
+          <p className="empty-msg">
+            Your queue is empty. Search to add titles.
+          </p>
         </div>
       )}
       <MovieTileGrid

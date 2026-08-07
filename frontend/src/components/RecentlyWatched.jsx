@@ -13,7 +13,13 @@ export default function RecentlyWatched({ recentlyWatched, changeWatchedStatus }
 
   return (
     <section className="recently-watched-section">
-      <h2 className="recently-watched-heading">Recently Watched</h2>
+      <div className="watchlist-header">
+        <h2 className="watchlist-header-title">RECENTLY WATCHED</h2>
+        <hr className="watchlist-header-line" />
+        <p className="watchlist-header-count">
+          {recentlyWatched.length} {recentlyWatched.length === 1 ? "title" : "titles"}
+        </p>
+      </div>
       <div className="recently-watched-grid">
         {recentlyWatched.map((movie) => (
           <div key={movie._id} className="rw-card">
