@@ -442,6 +442,36 @@ body {
   width: 100%;
 }
 
+.movie-card-title-overlay {
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.96) 0%,
+    rgba(0, 0, 0, 0.82) 25%,
+    rgba(0, 0, 0, 0.45) 55%,
+    transparent 100%
+  );
+  bottom: 0;
+  box-sizing: border-box;
+  left: 0;
+  padding: 52px 14px 14px;
+  position: absolute;
+  right: 0;
+}
+
+.movie-card-title-overlay p {
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  color: #ffffff;
+  display: -webkit-box;
+  font-family: Outfit, Arial, sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.3;
+  margin: 0;
+  overflow: hidden;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 1);
+}
+
 .movie-card-footer {
   background: linear-gradient(to top, rgba(8, 8, 8, 0.98) 15%, rgba(8, 8, 8, 0.82) 72%, transparent);
   bottom: 0;
