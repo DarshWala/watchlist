@@ -420,12 +420,12 @@ body {
 
 /* Card layout */
 .movie-card {
-  background: #101010;
-  border: 1px solid var(--border-color-light);
-  border-radius: 4px;
+  background: transparent;
+  border: none;
+  border-radius: 12px;
   position: relative;
   overflow: hidden;
-  transition: transform 0.2s ease, border-color 0.2s ease;
+  transition: transform 0.2s ease;
   width: 100%;
   max-width: 300px;
   aspect-ratio: 2 / 3;
@@ -433,7 +433,6 @@ body {
 
 .movie-card:hover {
   transform: translateY(-4px);
-  border-color: rgba(200, 146, 42, 0.4);
 }
 
 .movie-card-poster {
