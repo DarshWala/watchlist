@@ -31,7 +31,13 @@ const movieSchema = new mongoose.Schema({
   imdbRating: { type: String },
   plot: { type: String },
   genres: { type: String },
-  runtime: { type: String }
+  runtime: { type: String },
+  userRating: {
+    type: Number,
+    min: 1,
+    max: 10,
+    default: null,
+  },
 }, {
   timestamps: true 
 });

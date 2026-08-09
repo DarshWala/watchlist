@@ -19,8 +19,10 @@ export default function MovieTileGrid(props) {
         plot={item.plot}
         genres={item.genres}
         runtime={item.runtime}
+        userRating={item.userRating}
         watched={item.watched}
         changeWatchedStatus={props.changeWatchedStatus}
+        changeUserRating={props.changeUserRating}
       />
     );
   });

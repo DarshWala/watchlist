@@ -11,16 +11,18 @@ export default function MovieTile(props) {
     plot,
     genres,
     runtime,
+    userRating,
     deleteFromWatchlist,
     addToWatchList,
     watched,
     changeWatchedStatus,
+    changeUserRating,
   } = props;
   const [expanded, setExpanded] = React.useState(false);
 
   return (
-    <div className="movie-card tile-div">
-      <img src={image} alt={name || "movie poster"} />
+    <article className="movie-card">
+      <img className="movie-card-poster" src={image} alt={name || "movie poster"} />
 
       {/* Always-visible watched toggle — top-right corner */}
       {changeWatchedStatus && (
@@ -33,8 +35,7 @@ export default function MovieTile(props) {
         </button>
       )}
 
-      <div className="tile-overlay">
-        <p className="tile-title">{name}</p>
+      <div className="movie-card-overlay">
 
         {deleteFromWatchlist && (
           <button
@@ -51,6 +52,39 @@ export default function MovieTile(props) {
             Add To Watchlist
           </button>
         )}
+
+        {changeUserRating && (
+          <div className="rating-picker">
+            <p className="rating-picker-label">YOUR RATING</p>
+            <div className="rating-picker-buttons">
+              {Array.from({ length: 10 }, (_, index) => {
+                const rating = index + 1;
+
+                return (
+                  <button
+                    className={`rating-pip ${userRating >= rating ? "filled" : ""}`}
+                    key={rating}
+                    onClick={() => changeUserRating(id, rating)}
+                    type="button"
+                    aria-label={`Rate ${name} ${rating} out of 10`}
+                  >
+                    {rating}
+                  </button>
+                );
+              })}
+            </div>
+            {userRating && (
+              <button
+                className="clear-rating-btn"
+                onClick={() => changeUserRating(id, null)}
+                type="button"
+              >
+                Clear rating
+              </button>
+            )}
+          </div>
+        )}
+
         <button
           className="detail-toggle"
           onClick={() => setExpanded(!expanded)}
@@ -78,6 +112,22 @@ export default function MovieTile(props) {
           </p>
         </div>
       </div>
-    </div>
+
+      <footer className="movie-card-footer">
+        <div className="movie-card-summary">
+          <span className="movie-imdb-rating">★ {imdbRating || "N/A"}</span>
+          <span className="movie-card-separator">·</span>
+          <span className="movie-card-title">{name}</span>
+          <span className="movie-card-separator">·</span>
+          <span>{year}</span>
+          <span className="movie-card-separator">·</span>
+          <span className="movie-card-type">{type}</span>
+        </div>
+
+        {userRating !== null && userRating !== undefined && (
+          <p className="movie-user-rating">YOU ◆ {userRating} / 10</p>
+        )}
+      </footer>
+    </article>
   );
 }

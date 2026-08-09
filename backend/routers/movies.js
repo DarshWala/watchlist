@@ -136,6 +136,35 @@ router.patch("/:id/watched", async (req, res) => {
   }
 });
 
+router.patch("/:id/rating", async (req, res) => {
+  const { userRating } = req.body;
+
+  if (
+    userRating !== null &&
+    (!Number.isInteger(userRating) || userRating < 1 || userRating > 10)
+  ) {
+    return res.status(400).json({
+      message: "Rating must be a whole number between 1 and 10",
+    });
+  }
+
+  try {
+    const movie = await Movie.findByIdAndUpdate(
+      req.params.id,
+      { userRating },
+      { new: true, runValidators: true },
+    );
+
+    if (!movie) {
+      return res.status(404).json({ message: "Movie not found" });
+    }
+
+    return res.status(200).json(movie);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+});
+
 router.delete("/", async (req, res) => {
   const id = req.body.id;
 
