@@ -461,6 +461,7 @@ body {
 .movie-card-title-overlay p {
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   color: #ffffff;
   display: -webkit-box;
   font-family: Outfit, Arial, sans-serif;
