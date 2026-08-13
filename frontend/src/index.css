@@ -442,6 +442,50 @@ body {
   width: 100%;
 }
 
+.movie-card-tick {
+  align-items: center;
+  background: rgba(18, 17, 16, 0.82);
+  border: 1px solid rgba(244, 239, 230, 0.45);
+  border-radius: 50%;
+  color: #f4efe6;
+  cursor: pointer;
+  display: flex;
+  font-size: 1rem;
+  height: 32px;
+  justify-content: center;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  width: 32px;
+  z-index: 2;
+}
+
+.movie-card-heart {
+  align-items: center;
+  background: rgba(18, 17, 16, 0.82);
+  border: 1px solid rgba(244, 239, 230, 0.45);
+  border-radius: 50%;
+  color: #f4efe6;
+  cursor: pointer;
+  display: flex;
+  font-size: 1.25rem;
+  height: 32px;
+  justify-content: center;
+  left: 10px;
+  line-height: 1;
+  padding: 0;
+  position: absolute;
+  top: 10px;
+  width: 32px;
+  z-index: 2;
+}
+
+.movie-card-heart[aria-pressed="true"] {
+  background: rgba(189, 90, 84, 0.9);
+  border-color: #bd5a54;
+  color: #ffffff;
+}
+
 .movie-card-title-overlay {
   background: linear-gradient(
     to top,
@@ -807,6 +851,54 @@ body {
 /* ---- Recently Watched Section ---- */
 .recently-watched-section {
   padding: 10px 40px 30px;
+}
+
+.favourite-movies-section {
+  padding: 10px 40px 30px;
+}
+
+.favourite-movies-grid {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+  scrollbar-color: var(--primary-color) transparent;
+  scrollbar-width: thin;
+}
+
+.favourite-movie-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color-light);
+  border-radius: 4px;
+  display: flex;
+  flex: 0 0 180px;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.favourite-movie-poster {
+  aspect-ratio: 2 / 3;
+  background: #1f1f1f;
+  display: block;
+  object-fit: cover;
+  width: 100%;
+}
+
+.favourite-movie-info {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px 12px 12px;
+}
+
+.favourite-movie-title {
+  color: var(--text-color);
+  font-size: 0.88rem;
+  font-weight: 700;
+  line-height: 1.3;
+  margin: 0;
+  word-break: break-word;
 }
 
 .recently-watched-heading {

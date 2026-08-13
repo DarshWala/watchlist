@@ -16,6 +16,10 @@ const movieSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  favourite: {
+    type: Boolean,
+    default: false,
+  },
 
   watchedAt:{
     type : Date,

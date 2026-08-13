@@ -4,6 +4,7 @@ import MovieTileGrid from "./components/movieTileGrid";
 import Toast from "./components/Toast";
 import SearchMovieTileGrid from "./components/SearchMovieTileGrid";
 import RecentlyWatched from "./components/RecentlyWatched";
+import FavouriteMovies from "./components/FavouriteMovies";
 
 function App() {
   const [movieData, setMovieData] = React.useState([]);
@@ -163,6 +164,29 @@ function App() {
     }
   }
 
+  async function changeFavouriteStatus(id) {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/watchlist/${id}/favourite`,
+        { method: "PATCH" },
+      );
+
+      const updatedMovie = await response.json();
+
+      if (!response.ok) {
+        throw new Error(updatedMovie.message || "Could not update favourite");
+      }
+
+      setMovieData((currentMovies) =>
+        currentMovies.map((movie) =>
+          movie._id === id ? updatedMovie : movie,
+        ),
+      );
+    } catch (error) {
+      console.error("Change favourite status error:", error.message);
+    }
+  }
+
   async function changeUserRating(id, userRating) {
     try {
       const response = await fetch(
@@ -200,7 +224,8 @@ function App() {
     )
     .sort((a, b) => new Date(b.watchedAt) - new Date(a.watchedAt));
 
-  const eleInTheWatchlist = movieData.length - recentlyWatched.length;
+  const favouriteMovies = movieData.filter((movie) => movie.favourite);
+  const eleInTheWatchlist = movieData.filter((movie) => !movie.watched).length;
 
   //!  ---------------------- RETURN --------------------------------------------------------
 
@@ -282,6 +307,7 @@ function App() {
       <MovieTileGrid
         deleteFromWatchlist={deletePressed}
         changeWatchedStatus={changeWatchedStatus}
+        changeFavouriteStatus={changeFavouriteStatus}
         changeUserRating={changeUserRating}
         MoviesList={movieData.filter((m) => !m.watched)}
       />
@@ -289,6 +315,11 @@ function App() {
       <RecentlyWatched
         recentlyWatched={recentlyWatched}
         changeWatchedStatus={changeWatchedStatus}
+      />
+
+      <FavouriteMovies
+        favouriteMovies={favouriteMovies}
+        changeFavouriteStatus={changeFavouriteStatus}
       />
     </>
   );

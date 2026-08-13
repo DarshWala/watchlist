@@ -136,6 +136,23 @@ router.patch("/:id/watched", async (req, res) => {
   }
 });
 
+router.patch("/:id/favourite", async (req, res) => {
+  try {
+    const movie = await Movie.findById(req.params.id);
+
+    if (!movie) {
+      return res.status(404).json({ message: "Movie not found" });
+    }
+
+    movie.favourite = !movie.favourite;
+    await movie.save();
+
+    return res.status(200).json(movie);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+});
+
 router.patch("/:id/rating", async (req, res) => {
   const { userRating } = req.body;
 
