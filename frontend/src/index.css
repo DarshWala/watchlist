@@ -7,11 +7,17 @@
   --error-color: #c82828;
   --success-color: #1c8c50;
   --info-color: #2864c8;
-  --overlay-bg: rgba(0,0,0,0.6);
+  --overlay-bg: rgba(0, 0, 0, 0.6);
   --card-bg: transparent;
   --border-color: rgba(243, 242, 239, 0.15);
   --border-color-light: rgba(243, 242, 239, 0.08);
-  
+
+  /* Glass / blur */
+  --glass-blur: 12px;
+
+  /* Info popover */
+  --popover-bg: rgba(28, 28, 28, 0.65);
+
   /* Font families */
   --font-heading: "Playfair Display", "Georgia", serif;
   --font-mono: "monospace", monospace;
@@ -220,14 +226,15 @@ body {
   font-weight: 700;
   letter-spacing: 0.07em;
   text-transform: uppercase;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
 }
 
 .delete-btn:hover {
   background-color: var(--primary-color);
   color: #1e1e1e;
 }
-
 
 /* IMAGE MISSING PLACEHOLDER */
 
@@ -240,19 +247,17 @@ body {
   padding: 16px;
   box-sizing: border-box;
 
-  background:
-    linear-gradient(
-      135deg,
-      rgba(200, 146, 42, 0.12),
-      rgba(255, 255, 255, 0.03)
-    );
+  background: linear-gradient(
+    135deg,
+    rgba(200, 146, 42, 0.12),
+    rgba(255, 255, 255, 0.03)
+  );
   border: 1px solid var(--border-color);
   color: rgba(245, 245, 220, 0.65);
   font-family: var(--font-mono);
   font-size: 0.8rem;
   text-align: center;
 }
-
 
 /* Grid layout */
 .tile-grid {
@@ -263,7 +268,6 @@ body {
   align-items: start;
   padding: 20px 40px;
 }
-
 
 /* Personal rating row */
 .tile-rating {
@@ -293,7 +297,10 @@ body {
   font-family: var(--font-mono);
   font-weight: 700;
   cursor: pointer;
-  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -333,7 +340,6 @@ body {
   gap: 2px;
   flex-wrap: wrap;
 }
-
 
 /* Watchlist Header Layout */
 .watchlist-header {
@@ -540,7 +546,12 @@ body {
 }
 
 .movie-card-footer {
-  background: linear-gradient(to top, rgba(8, 8, 8, 0.98) 15%, rgba(8, 8, 8, 0.82) 72%, transparent);
+  background: linear-gradient(
+    to top,
+    rgba(8, 8, 8, 0.98) 15%,
+    rgba(8, 8, 8, 0.82) 72%,
+    transparent
+  );
   bottom: 0;
   box-sizing: border-box;
   color: var(--text-color);
@@ -758,7 +769,9 @@ body {
   font-size: 0.85rem;
   padding: 2px 4px;
   border-radius: 4px;
-  transition: opacity 0.2s ease, background 0.2s ease;
+  transition:
+    opacity 0.2s ease,
+    background 0.2s ease;
   flex-shrink: 0;
 }
 
@@ -795,7 +808,9 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100%;
-  transition: border-color 0.2s ease, transform 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    transform 0.2s ease;
 }
 
 .search-result-card:hover {
@@ -855,7 +870,9 @@ body {
   font-weight: 700;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  transition: background-color 0.2s ease, transform 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
 }
 
 .search-result-add-btn:hover {
@@ -948,7 +965,9 @@ body {
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  transition: border-color 0.25s ease, transform 0.2s ease;
+  transition:
+    border-color 0.25s ease,
+    transform 0.2s ease;
 }
 
 .rw-card:hover {
@@ -1002,7 +1021,9 @@ body {
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
 }
 
 .unwatch-btn:hover {
@@ -1029,7 +1050,10 @@ body {
   letter-spacing: 0.05em;
   text-transform: uppercase;
   backdrop-filter: blur(6px);
-  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1052,4 +1076,214 @@ body {
   color: #ffe5e5;
 }
 
+/* =====================================================================
+   INFO POPOVER  — morph animation + popover layout
+   ===================================================================== */
 
+/*
+ * .movie-card-info-anchor
+ * Wraps the <article> + the <MovieInfoPopover> so that position:absolute
+ * on the popover is relative to this div, NOT to .movie-card
+ * (which has overflow:hidden and would clip the expanded popover).
+ */
+.movie-card-info-anchor {
+  position: relative;
+  width: 100%;
+  max-width: 300px;
+}
+
+/*
+ * .info-popover-wrapper
+ * Direct parent of the trigger button + morph element.
+ * Positioned at the bottom-right corner of the tile, matching where
+ * .movie-card-info used to sit via position:absolute inside the overlay.
+ */
+.info-popover-wrapper {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  z-index: 20;
+}
+
+/* ── Trigger button ────────────────────────────────────────────────── */
+/* .movie-card-info is already defined above; we only extend it here   */
+.info-popover-wrapper .movie-card-info {
+  /* ensure it sits above the morph element */
+  position: relative;
+  z-index: 21;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.15s ease;
+}
+
+.info-popover-wrapper .movie-card-info:hover {
+  background: rgba(200, 146, 42, 0.25);
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+  transform: scale(1.08);
+}
+
+/* Active / open state — amber fill to signal it's open */
+.info-popover-wrapper .movie-card-info[aria-expanded="true"] {
+  background: rgba(200, 146, 42, 0.35);
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+/* ── Morph container ───────────────────────────────────────────────── */
+/*
+ * Closed (default): a tiny circle matching the trigger button size.
+ * Open:             grows to a 280 px-wide rectangle, border-radius shrinks.
+ *
+ * Default open direction: LEFT edge of the morph is pinned (left:0 within
+ * the wrapper), so the box expands RIGHTWARD — opening to the right of the
+ * tile. The --left modifier flips the anchor to right:0 so it grows
+ * leftward; this is used automatically when the tile is near the right
+ * edge of the viewport and there isn't enough room to expand right.
+ */
+.info-popover-morph {
+  /* Closed state — invisible dot, same size as trigger */
+  position: absolute;
+  bottom: 0;
+  left: 0; /* ← anchor: grows rightward by default */
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+
+  /* Visual styling */
+  background: var(--popover-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--border-color);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+
+  /* The shape-morph transition */
+  transition:
+    width 0.35s cubic-bezier(0.34, 1.2, 0.64, 1),
+    height 0.35s cubic-bezier(0.34, 1.2, 0.64, 1),
+    border-radius 0.35s ease,
+    opacity 0.25s ease;
+}
+
+/* Open state — expands into a rectangle */
+.info-popover-morph--open {
+  width: 280px;
+  height: auto;
+  max-height: 380px;
+  border-radius: 12px;
+  opacity: 1;
+  pointer-events: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary-color) transparent;
+}
+
+/*
+ * Viewport-edge fallback: anchors to the RIGHT so it expands LEFTWARD.
+ * Applied by JS when window.innerWidth - rect.right < popoverWidth.
+ */
+.info-popover-morph--left {
+  left: auto;
+  right: 0; /* ← grows leftward when near the right viewport edge */
+}
+
+/* ── Popover content ───────────────────────────────────────────────── */
+/*
+ * Fades in AFTER the shape has finished growing so text doesn't
+ * smear/clip during the resize. Achieved via transition-delay.
+ */
+.info-popover-content {
+  padding: 14px 14px 12px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  transition-delay: 0s;
+  /* Prevent content from forcing layout during the closed->open morph */
+  min-width: 252px; /* popover width - 2*padding */
+}
+
+.info-popover-content--visible {
+  opacity: 1;
+  transition-delay: 0.18s; /* stagger: starts after shape is mostly grown */
+}
+
+/* Movie name heading inside popover */
+.info-popover-movie-name {
+  margin: 0 0 10px;
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-color);
+  line-height: 1.3;
+  word-break: break-word;
+  /* Subtle amber underline to echo the app accent */
+  border-bottom: 1px solid rgba(200, 146, 42, 0.3);
+  padding-bottom: 8px;
+}
+
+/* Details <dl> */
+.info-popover-list {
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 10px;
+  row-gap: 5px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+}
+
+.info-popover-label {
+  color: var(--primary-color);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  /* align to top for multi-line values */
+  align-self: start;
+  padding-top: 1px;
+}
+
+/* Plot label spans full width since plot goes in its own row below */
+.info-popover-label--block {
+  grid-column: 1 / -1;
+  margin-top: 4px;
+}
+
+.info-popover-value {
+  margin: 0;
+  color: var(--text-color);
+  opacity: 0.9;
+  word-break: break-word;
+  line-height: 1.4;
+}
+
+.info-popover-value--capitalize {
+  text-transform: capitalize;
+}
+
+.info-popover-value--accent {
+  color: var(--primary-color);
+  font-weight: 700;
+}
+
+/* Plot value: scrollable block that spans full width */
+.info-popover-value--plot {
+  grid-column: 1 / -1;
+  opacity: 0.8;
+  line-height: 1.5;
+  max-height: 110px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary-color) transparent;
+  /* Subtle inset background to visually distinguish the plot block */
+  background: rgba(255, 255, 255, 0.04);
+  border-left: 2px solid rgba(200, 146, 42, 0.35);
+  padding: 6px 8px;
+  border-radius: 3px;
+  margin-top: 2px;
+}
