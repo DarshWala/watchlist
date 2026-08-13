@@ -28,6 +28,13 @@ export default function MovieTile({
       </button>
       <div className="movie-card-title-overlay">
         <p>{name}</p>
+        <button
+          className="movie-card-info"
+          type="button"
+          aria-label={`View details for ${name}`}
+        >
+          i
+        </button>
       </div>
     </article>
   );

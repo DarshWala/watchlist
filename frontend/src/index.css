@@ -497,7 +497,7 @@ body {
   bottom: 0;
   box-sizing: border-box;
   left: 0;
-  padding: 52px 14px 14px;
+  padding: 52px 52px 14px 14px;
   position: absolute;
   right: 0;
 }
@@ -515,6 +515,28 @@ body {
   margin: 0;
   overflow: hidden;
   text-shadow: 0 1px 6px rgba(0, 0, 0, 1);
+}
+
+.movie-card-info {
+  align-items: center;
+  background: rgba(18, 17, 16, 0.82);
+  border: 1px solid rgba(244, 239, 230, 0.45);
+  border-radius: 50%;
+  bottom: 12px;
+  color: #f4efe6;
+  cursor: pointer;
+  display: flex;
+  font-family: Georgia, serif;
+  font-size: 1rem;
+  font-style: italic;
+  font-weight: 700;
+  height: 30px;
+  justify-content: center;
+  line-height: 1;
+  padding: 0;
+  position: absolute;
+  right: 12px;
+  width: 30px;
 }
 
 .movie-card-footer {
