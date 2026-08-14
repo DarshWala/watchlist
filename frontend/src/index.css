@@ -1108,9 +1108,9 @@ body {
 /* ── Trigger button ────────────────────────────────────────────────── */
 /* .movie-card-info is already defined above; we only extend it here   */
 .info-popover-wrapper .movie-card-info {
-  /* ensure it sits above the morph element */
+  /* sits below the morph element so the open popover covers it */
   position: relative;
-  z-index: 21;
+  z-index: 1;
   transition:
     background-color 0.2s ease,
     border-color 0.2s ease,
@@ -1181,6 +1181,8 @@ body {
   overflow-x: hidden;
   scrollbar-width: thin;
   scrollbar-color: var(--primary-color) transparent;
+  /* rise above the trigger button and neighbouring info buttons */
+  z-index: 30;
 }
 
 /*
