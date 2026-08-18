@@ -46,6 +46,13 @@ export default function MovieTile({
           ✓
         </button>
 
+        {/* ── Hover overlay (darkens + shows actions) ── */}
+        <div className="movie-card-overlay">
+          <button className="add-rating-btn" type="button">
+            ★ Add Rating
+          </button>
+        </div>
+
         {/* ── Title + info button row ── */}
         <div className="movie-card-title-overlay">
           <p>{name}</p>

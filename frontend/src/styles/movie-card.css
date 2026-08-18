@@ -409,6 +409,31 @@
   margin-top: 6px;
 }
 
+/* ---- Add Rating Button (shown on card hover) ---- */
+.add-rating-btn {
+  background: transparent;
+  border: 1px solid var(--primary-color);
+  border-radius: 4px;
+  color: var(--primary-color);
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 8px 18px;
+  text-transform: uppercase;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.15s ease;
+}
+
+.add-rating-btn:hover {
+  background-color: var(--primary-color);
+  color: #1e1e1e;
+  transform: scale(1.04);
+}
+
 
 /* ---- Watched Corner Button ---- */
 .watched-corner-btn {
