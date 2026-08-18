@@ -1,0 +1,24 @@
+:root {
+  /* Color palette */
+  --bg-color: #722f37; /* dark charcoal */
+  --text-color: #f5f5dc; /* warm off-white */
+  --primary-color: #A67B5B; /* amber accent */
+  --primary-hover: #A67B5B;
+  --error-color: #c82828;
+  --success-color: #1c8c50;
+  --info-color: #2864c8;
+  --overlay-bg: rgba(0, 0, 0, 0.6);
+  --card-bg: transparent;
+  --border-color: rgba(245, 245, 220, 0.15);
+  --border-color-light: rgba(243, 242, 239, 0.08);
+
+  /* Glass / blur */
+  --glass-blur: 12px;
+
+  /* Info popover */
+  --popover-bg: rgba(28, 28, 28, 0.65);
+
+  /* Font families */
+  --font-heading: "Playfair Display", "Georgia", serif;
+  --font-mono: "monospace", monospace;
+}

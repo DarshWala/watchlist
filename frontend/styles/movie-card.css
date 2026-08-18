@@ -1,0 +1,721 @@
+/* Tile component */
+.tile-div {
+  padding: 5px;
+  overflow: hidden;
+  width: 100%;
+  max-width: 300px;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid var(--border-color-light);
+  transition: border-color 0.25s ease;
+}
+
+.tile-div:hover {
+  border-color: rgba(200, 146, 42, 0.4);
+}
+
+.tile-div > img {
+  width: 75%;
+  height: 75%;
+  aspect-ratio: 2/3;
+  object-fit: cover;
+  display: block;
+  transition: filter 0.3s ease;
+}
+
+.tile-div:hover > img {
+  filter: brightness(0.45);
+}
+
+.tile-overlay {
+  position: absolute;
+  top: 5px;
+  width: 75%;
+  height: calc(100% - 10px);
+  color: var(--text-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 12px;
+  box-sizing: border-box;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.tile-div:hover .tile-overlay {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.tile-title {
+  margin: 0 0 14px 0;
+  font-size: 1rem;
+  font-family: var(--font-mono);
+  font-weight: bold;
+  letter-spacing: 0.04em;
+  word-break: break-word;
+  color: var(--text-color);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+}
+
+/* Delete button */
+.delete-btn {
+  background-color: transparent;
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+  padding: 7px 14px;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.delete-btn:hover {
+  background-color: var(--primary-color);
+  color: #1e1e1e;
+}
+
+/* IMAGE MISSING PLACEHOLDER */
+
+.poster-placeholder {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  display: grid;
+  place-items: center;
+  gap: 8px;
+  padding: 16px;
+  box-sizing: border-box;
+
+  background: linear-gradient(
+    135deg,
+    rgba(200, 146, 42, 0.12),
+    rgba(255, 255, 255, 0.03)
+  );
+  border: 1px solid var(--border-color);
+  color: rgba(245, 245, 220, 0.65);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+/* Grid layout */
+.tile-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 24px;
+  justify-items: center;
+  align-items: start;
+  padding: 20px 40px;
+}
+
+/* Personal rating row */
+.tile-rating {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  flex-wrap: wrap;
+  padding: 5px 4px;
+  background: rgba(20, 20, 20, 0.82);
+  backdrop-filter: blur(4px);
+}
+
+.rating-pip {
+  width: 22px;
+  height: 22px;
+  background: transparent;
+  border: 1px solid rgba(200, 146, 42, 0.35);
+  border-radius: 3px;
+  color: rgba(245, 245, 220, 0.45);
+  font-size: 0.6rem;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.rating-pip:hover {
+  background-color: rgba(200, 146, 42, 0.25);
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+.rating-pip.filled {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  color: #1e1e1e;
+}
+
+.rating-pip.small {
+  width: 18px;
+  height: 18px;
+  font-size: 0.55rem;
+}
+
+.rating-display {
+  margin-left: 4px;
+  font-size: 0.72rem;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--primary-color);
+  white-space: nowrap;
+}
+
+.rw-rating {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex-wrap: wrap;
+}
+
+/* Card layout */
+.movie-card {
+  background: transparent;
+  border: none;
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s ease;
+  width: 100%;
+  max-width: 300px;
+  aspect-ratio: 2 / 3;
+}
+
+.movie-card:hover {
+  transform: translateY(-4px);
+}
+
+.movie-card-poster {
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.movie-card-tick {
+  align-items: center;
+  background: rgba(18, 17, 16, 0.82);
+  border: 1px solid rgba(244, 239, 230, 0.45);
+  border-radius: 50%;
+  color: #f4efe6;
+  cursor: pointer;
+  display: flex;
+  font-size: 1rem;
+  height: 32px;
+  justify-content: center;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  width: 32px;
+  z-index: 2;
+}
+
+.movie-card-heart {
+  align-items: center;
+  background: rgba(18, 17, 16, 0.82);
+  border: 1px solid rgba(244, 239, 230, 0.45);
+  border-radius: 50%;
+  color: #f4efe6;
+  cursor: pointer;
+  display: flex;
+  font-size: 1.25rem;
+  height: 32px;
+  justify-content: center;
+  left: 10px;
+  line-height: 1;
+  padding: 0;
+  position: absolute;
+  top: 10px;
+  width: 32px;
+  z-index: 2;
+}
+
+.movie-card-heart[aria-pressed="true"] {
+  background: rgba(189, 90, 84, 0.9);
+  border-color: #bd5a54;
+  color: #ffffff;
+}
+
+.movie-card-title-overlay {
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.96) 0%,
+    rgba(0, 0, 0, 0.82) 25%,
+    rgba(0, 0, 0, 0.45) 55%,
+    transparent 100%
+  );
+  bottom: 0;
+  box-sizing: border-box;
+  left: 0;
+  padding: 52px 52px 14px 14px;
+  position: absolute;
+  right: 0;
+}
+
+.movie-card-title-overlay p {
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  color: #ffffff;
+  display: -webkit-box;
+  font-family: Outfit, Arial, sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.3;
+  margin: 0;
+  overflow: hidden;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 1);
+}
+
+.movie-card-info {
+  align-items: center;
+  background: rgba(18, 17, 16, 0.82);
+  border: 1px solid rgba(244, 239, 230, 0.45);
+  border-radius: 50%;
+  bottom: 12px;
+  color: #f4efe6;
+  cursor: pointer;
+  display: flex;
+  font-family: Georgia, serif;
+  font-size: 1rem;
+  font-style: italic;
+  font-weight: 700;
+  height: 30px;
+  justify-content: center;
+  line-height: 1;
+  padding: 0;
+  position: absolute;
+  right: 12px;
+  width: 30px;
+}
+
+.movie-card-footer {
+  background: linear-gradient(
+    to top,
+    rgba(8, 8, 8, 0.98) 15%,
+    rgba(8, 8, 8, 0.82) 72%,
+    transparent
+  );
+  bottom: 0;
+  box-sizing: border-box;
+  color: var(--text-color);
+  left: 0;
+  padding: 48px 12px 12px;
+  position: absolute;
+  right: 0;
+  pointer-events: none;
+  z-index: 6;
+}
+
+.movie-card-summary {
+  align-items: center;
+  display: flex;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  gap: 5px;
+  min-width: 0;
+  white-space: nowrap;
+}
+
+.movie-imdb-rating {
+  color: var(--primary-color);
+  flex: 0 0 auto;
+  font-weight: 700;
+}
+
+.movie-card-title {
+  font-family: Outfit, Arial, sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.movie-card-separator {
+  color: rgba(243, 242, 239, 0.45);
+  flex: 0 0 auto;
+}
+
+.movie-card-type {
+  flex: 0 0 auto;
+  text-transform: capitalize;
+}
+
+.movie-user-rating {
+  color: rgba(200, 146, 42, 0.7);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  margin: 7px 0 0;
+}
+
+.movie-card-overlay {
+  align-items: center;
+  background: rgba(8, 8, 8, 0.88);
+  box-sizing: border-box;
+  color: var(--text-color);
+  display: flex;
+  flex-direction: column;
+  inset: 0;
+  justify-content: center;
+  opacity: 0;
+  padding: 14px 14px 110px;
+  pointer-events: none;
+  position: absolute;
+  text-align: center;
+  transition: opacity 0.2s ease;
+  z-index: 5;
+}
+
+.movie-card:hover .movie-card-overlay,
+.movie-card:focus-within .movie-card-overlay {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.rating-picker {
+  margin: 12px 0;
+}
+
+.rating-picker-label {
+  color: var(--primary-color);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  margin: 0 0 7px;
+}
+
+.rating-picker-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  justify-content: center;
+  max-width: 170px;
+}
+
+.clear-rating-btn {
+  background: transparent;
+  border: 0;
+  color: rgba(243, 242, 239, 0.65);
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  margin-top: 8px;
+  text-decoration: underline;
+}
+
+/* Detail toggle */
+.detail-toggle {
+  background: transparent;
+  border: none;
+  color: var(--primary-color);
+  cursor: pointer;
+  font-size: 0.9rem;
+  margin-top: 6px;
+}
+
+/* Details container */
+.detail-card {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease;
+  font-size: 0.85rem;
+  color: var(--text-color);
+  margin-top: 8px;
+}
+
+.detail-card.expanded {
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.detail-row {
+  margin-bottom: 4px;
+}
+
+/* ---- Watched Corner Button ---- */
+.watched-corner-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 10;
+  width: 64px;
+  height: 28px;
+  background-color: rgba(30, 30, 30, 0.75);
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 0.65rem;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  backdrop-filter: blur(6px);
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.watched-corner-btn:hover {
+  background-color: var(--primary-color);
+  color: #1e1e1e;
+}
+
+.watched-corner-btn.is-watched {
+  background-color: rgba(28, 140, 80, 0.85);
+  border-color: #1c8c50;
+  color: #e0ffe8;
+}
+
+.watched-corner-btn.is-watched:hover {
+  background-color: rgba(200, 40, 40, 0.85);
+  border-color: var(--error-color);
+  color: #ffe5e5;
+}
+
+/* =====================================================================
+   INFO POPOVER  — morph animation + popover layout
+   Lives here (not a separate file) because it's visually and
+   structurally part of the movie card, not an independent component.
+   ===================================================================== */
+
+/*
+ * .movie-card-info-anchor
+ * Wraps the <article> + the <MovieInfoPopover> so that position:absolute
+ * on the popover is relative to this div, NOT to .movie-card
+ * (which has overflow:hidden and would clip the expanded popover).
+ */
+.movie-card-info-anchor {
+  position: relative;
+  width: 100%;
+  max-width: 300px;
+}
+
+/*
+ * .info-popover-wrapper
+ * Direct parent of the trigger button + morph element.
+ * Positioned at the bottom-right corner of the tile, matching where
+ * .movie-card-info used to sit via position:absolute inside the overlay.
+ */
+.info-popover-wrapper {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  z-index: 20;
+}
+
+/* ── Trigger button ────────────────────────────────────────────────── */
+/* .movie-card-info is already defined above; we only extend it here   */
+.info-popover-wrapper .movie-card-info {
+  /* sits below the morph element so the open popover covers it */
+  position: relative;
+  z-index: 1;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.15s ease;
+}
+
+.info-popover-wrapper .movie-card-info:hover {
+  background: rgba(200, 146, 42, 0.25);
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+  transform: scale(1.08);
+}
+
+/* Active / open state — amber fill to signal it's open */
+.info-popover-wrapper .movie-card-info[aria-expanded="true"] {
+  background: rgba(200, 146, 42, 0.35);
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+/* ── Morph container ───────────────────────────────────────────────── */
+/*
+ * Closed (default): a tiny circle matching the trigger button size.
+ * Open:             grows to a 280 px-wide rectangle, border-radius shrinks.
+ *
+ * Default open direction: LEFT edge of the morph is pinned (left:0 within
+ * the wrapper), so the box expands RIGHTWARD — opening to the right of the
+ * tile. The --left modifier flips the anchor to right:0 so it grows
+ * leftward; this is used automatically when the tile is near the right
+ * edge of the viewport and there isn't enough room to expand right.
+ */
+.info-popover-morph {
+  /* Closed state — invisible dot, same size as trigger */
+  position: absolute;
+  bottom: 0;
+  left: 0; /* ← anchor: grows rightward by default */
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+
+  /* Visual styling */
+  background: var(--popover-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--border-color);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+
+  /* The shape-morph transition */
+  transition:
+    width 0.35s cubic-bezier(0.34, 1.2, 0.64, 1),
+    height 0.35s cubic-bezier(0.34, 1.2, 0.64, 1),
+    border-radius 0.35s ease,
+    opacity 0.25s ease;
+}
+
+/* Open state — expands into a rectangle */
+.info-popover-morph--open {
+  width: 280px;
+  height: auto;
+  max-height: 380px;
+  border-radius: 12px;
+  opacity: 1;
+  pointer-events: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary-color) transparent;
+  /* rise above the trigger button and neighbouring info buttons */
+  z-index: 30;
+}
+
+/*
+ * Viewport-edge fallback: anchors to the RIGHT so it expands LEFTWARD.
+ * Applied by JS when window.innerWidth - rect.right < popoverWidth.
+ */
+.info-popover-morph--left {
+  left: auto;
+  right: 0; /* ← grows leftward when near the right viewport edge */
+}
+
+/* ── Popover content ───────────────────────────────────────────────── */
+/*
+ * Fades in AFTER the shape has finished growing so text doesn't
+ * smear/clip during the resize. Achieved via transition-delay.
+ */
+.info-popover-content {
+  padding: 14px 14px 12px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  transition-delay: 0s;
+  /* Prevent content from forcing layout during the closed->open morph */
+  min-width: 252px; /* popover width - 2*padding */
+}
+
+.info-popover-content--visible {
+  opacity: 1;
+  transition-delay: 0.18s; /* stagger: starts after shape is mostly grown */
+}
+
+/* Movie name heading inside popover */
+.info-popover-movie-name {
+  margin: 0 0 10px;
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-color);
+  line-height: 1.3;
+  word-break: break-word;
+  /* Subtle amber underline to echo the app accent */
+  border-bottom: 1px solid rgba(200, 146, 42, 0.3);
+  padding-bottom: 8px;
+}
+
+/* Details <dl> */
+.info-popover-list {
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 10px;
+  row-gap: 5px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+}
+
+.info-popover-label {
+  color: var(--primary-color);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  /* align to top for multi-line values */
+  align-self: start;
+  padding-top: 1px;
+}
+
+/* Plot label spans full width since plot goes in its own row below */
+.info-popover-label--block {
+  grid-column: 1 / -1;
+  margin-top: 4px;
+}
+
+.info-popover-value {
+  margin: 0;
+  color: var(--text-color);
+  opacity: 0.9;
+  word-break: break-word;
+  line-height: 1.4;
+}
+
+.info-popover-value--capitalize {
+  text-transform: capitalize;
+}
+
+.info-popover-value--accent {
+  color: var(--primary-color);
+  font-weight: 700;
+}
+
+/* Plot value: scrollable block that spans full width */
+.info-popover-value--plot {
+  grid-column: 1 / -1;
+  opacity: 0.8;
+  line-height: 1.5;
+  max-height: 110px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary-color) transparent;
+  /* Subtle inset background to visually distinguish the plot block */
+  background: rgba(255, 255, 255, 0.04);
+  border-left: 2px solid rgba(200, 146, 42, 0.35);
+  padding: 6px 8px;
+  border-radius: 3px;
+  margin-top: 2px;
+}
