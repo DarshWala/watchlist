@@ -287,8 +287,8 @@
   font-weight: 700;
   line-height: 1.3;
   margin: 0;
-  overflow: hidden;
-  text-shadow: 0 1px 6px rgba(0, 0, 0, 1);
+  width: 100px;
+  text-wrap: auto;
 }
 
 .movie-card-info {
@@ -399,37 +399,6 @@
   pointer-events: auto;
 }
 
-.rating-picker {
-  margin: 12px 0;
-}
-
-.rating-picker-label {
-  color: var(--primary-color);
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.1em;
-  margin: 0 0 7px;
-}
-
-.rating-picker-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-  justify-content: center;
-  max-width: 170px;
-}
-
-.clear-rating-btn {
-  background: transparent;
-  border: 0;
-  color: rgba(243, 242, 239, 0.65);
-  cursor: pointer;
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-  margin-top: 8px;
-  text-decoration: underline;
-}
-
 /* Detail toggle */
 .detail-toggle {
   background: transparent;
@@ -440,24 +409,6 @@
   margin-top: 6px;
 }
 
-/* Details container */
-.detail-card {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.5s ease;
-  font-size: 0.85rem;
-  color: var(--text-color);
-  margin-top: 8px;
-}
-
-.detail-card.expanded {
-  max-height: 500px;
-  overflow-y: auto;
-}
-
-.detail-row {
-  margin-bottom: 4px;
-}
 
 /* ---- Watched Corner Button ---- */
 .watched-corner-btn {
@@ -530,8 +481,8 @@
  */
 .info-popover-wrapper {
   position: absolute;
-  bottom: 12px;
-  right: 12px;
+  bottom: 0px;
+  right: 2px;
   z-index: 20;
 }
 
@@ -539,7 +490,8 @@
 /* .movie-card-info is already defined above; we only extend it here   */
 .info-popover-wrapper .movie-card-info {
   /* sits below the morph element so the open popover covers it */
-  position: relative;
+  /* left: 1px; */
+  position: absolute;
   z-index: 1;
   transition:
     background-color 0.2s ease,
@@ -602,7 +554,7 @@
 /* Open state — expands into a rectangle */
 .info-popover-morph--open {
   width: 280px;
-  height: auto;
+  height: 320px;
   max-height: 380px;
   border-radius: 12px;
   opacity: 1;
@@ -612,7 +564,7 @@
   scrollbar-width: thin;
   scrollbar-color: var(--primary-color) transparent;
   /* rise above the trigger button and neighbouring info buttons */
-  z-index: 30;
+  z-index: 31;
 }
 
 /*
@@ -667,6 +619,7 @@
   row-gap: 5px;
   font-family: var(--font-mono);
   font-size: 0.72rem;
+  
 }
 
 .info-popover-label {

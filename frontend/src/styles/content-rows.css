@@ -1,0 +1,250 @@
+/* Search results */
+.search-results-section {
+  padding: 10px 40px 30px;
+}
+
+.search-results-heading {
+  color: var(--text-color);
+  font-family: var(--font-heading);
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  margin: 0 0 16px;
+  text-align: center;
+}
+
+.search-results-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  align-items: stretch;
+}
+
+.search-result-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color-light);
+  border-radius: 4px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  transition:
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.search-result-card:hover {
+  border-color: rgba(200, 146, 42, 0.4);
+  transform: translateY(-4px);
+}
+
+.search-result-poster {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  display: block;
+  background: #1f1f1f;
+}
+
+.search-result-body {
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+
+.search-result-title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-color);
+  word-break: break-word;
+}
+
+.search-result-year {
+  margin: 0;
+  color: rgba(245, 245, 220, 0.8);
+}
+
+.search-result-type {
+  align-self: flex-start;
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  color: var(--primary-color);
+  font-size: 0.75rem;
+  padding: 4px 8px;
+  text-transform: capitalize;
+}
+
+.search-result-add-btn {
+  margin-top: auto;
+  background-color: var(--primary-color);
+  color: #1e1e1e;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.search-result-add-btn:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-1px);
+}
+
+.search-result-success {
+  margin: auto 0 0;
+  color: var(--success-color);
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+/* ---- Recently Watched Section ---- */
+.recently-watched-section {
+  padding: 10px 40px 30px;
+}
+
+.favourite-movies-section {
+  padding: 10px 40px 30px;
+}
+
+.favourite-movies-grid {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+  scrollbar-color: var(--primary-color) transparent;
+  scrollbar-width: thin;
+}
+
+.favourite-movie-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color-light);
+  border-radius: 4px;
+  display: flex;
+  flex: 0 0 180px;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.favourite-movie-poster {
+  aspect-ratio: 2 / 3;
+  background: #1f1f1f;
+  display: block;
+  object-fit: cover;
+  width: 100%;
+}
+
+.favourite-movie-info {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px 12px 12px;
+}
+
+.favourite-movie-title {
+  color: var(--text-color);
+  font-size: 0.88rem;
+  font-weight: 700;
+  line-height: 1.3;
+  margin: 0;
+  word-break: break-word;
+}
+
+.recently-watched-heading {
+  color: var(--text-color);
+  font-family: var(--font-heading);
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  margin: 0 0 16px;
+  text-align: center;
+}
+
+.recently-watched-grid {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary-color) transparent;
+}
+
+.rw-card {
+  flex: 0 0 180px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color-light);
+  border-radius: 4px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition:
+    border-color 0.25s ease,
+    transform 0.2s ease;
+}
+
+.rw-card:hover {
+  border-color: rgba(200, 146, 42, 0.45);
+  transform: translateY(-3px);
+}
+
+.rw-poster {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  display: block;
+  background: #1f1f1f;
+}
+
+.rw-info {
+  padding: 10px 12px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+
+.rw-title {
+  margin: 0;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text-color);
+  word-break: break-word;
+  line-height: 1.3;
+}
+
+.rw-date {
+  margin: 0;
+  font-size: 0.75rem;
+  color: rgba(245, 245, 220, 0.55);
+  font-style: italic;
+}
+
+/* Shared by recently-watched cards and favourite-movie cards */
+.unwatch-btn {
+  margin-top: auto;
+  background-color: transparent;
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+  padding: 6px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 0.72rem;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.unwatch-btn:hover {
+  background-color: var(--primary-color);
+  color: #1e1e1e;
+}
