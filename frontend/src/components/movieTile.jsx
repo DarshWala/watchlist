@@ -1,4 +1,5 @@
 import MovieInfoPopover from "./MovieInfoPopover.jsx";
+import RatingPopover from "./RatingPopover.jsx";
 
 export default function MovieTile({
   id,
@@ -11,20 +12,17 @@ export default function MovieTile({
   genres,
   favourite,
   watched,
+  userRating,
+  notes,
   changeFavouriteStatus,
   changeWatchedStatus,
+  changeUserRating,
 }) {
   return (
-    /*
-     * .movie-card-info-anchor wraps the <article> so the popover can be
-     * positioned absolutely relative to this wrapper — not relative to
-     * .movie-card, which has overflow:hidden and would clip the popover.
-     */
     <div className="movie-card-info-anchor">
       <article className="movie-card">
         <img className="movie-card-poster" src={image} alt={name || "movie poster"} />
 
-        {/* ── Heart / favourite ── */}
         <button
           className="movie-card-heart"
           type="button"
@@ -35,7 +33,6 @@ export default function MovieTile({
           {favourite ? "♥" : "♡"}
         </button>
 
-        {/* ── Watched tick ── */}
         <button
           className="movie-card-tick"
           type="button"
@@ -46,20 +43,11 @@ export default function MovieTile({
           ✓
         </button>
 
-        {/* ── Hover overlay (darkens + shows actions) ── */}
-        <div className="movie-card-overlay">
-          <button className="add-rating-btn" type="button">
-            ★ Add Rating
-          </button>
-        </div>
-
-        {/* ── Title + info button row ── */}
         <div className="movie-card-title-overlay">
           <p>{name}</p>
         </div>
       </article>
 
-      {/* Popover lives OUTSIDE .movie-card so overflow:hidden doesn't clip it */}
       <MovieInfoPopover
         name={name}
         year={year}
@@ -67,6 +55,13 @@ export default function MovieTile({
         imdbRating={imdbRating}
         plot={plot}
         genres={genres}
+      />
+
+      <RatingPopover
+        id={id}
+        userRating={userRating}
+        notes={notes}
+        onSave={changeUserRating}
       />
     </div>
   );

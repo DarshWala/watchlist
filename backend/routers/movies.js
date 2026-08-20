@@ -154,9 +154,10 @@ router.patch("/:id/favourite", async (req, res) => {
 });
 
 router.patch("/:id/rating", async (req, res) => {
-  const { userRating } = req.body;
+  const { userRating, notes } = req.body;
 
   if (
+    userRating !== undefined &&
     userRating !== null &&
     (!Number.isInteger(userRating) || userRating < 1 || userRating > 10)
   ) {
@@ -165,10 +166,18 @@ router.patch("/:id/rating", async (req, res) => {
     });
   }
 
+  if (notes !== undefined && typeof notes !== "string") {
+    return res.status(400).json({ message: "Notes must be text" });
+  }
+
+  const update = {};
+  if (userRating !== undefined) update.userRating = userRating;
+  if (notes !== undefined) update.notes = notes;
+
   try {
     const movie = await Movie.findByIdAndUpdate(
       req.params.id,
-      { userRating },
+      update,
       { new: true, runValidators: true },
     );
 

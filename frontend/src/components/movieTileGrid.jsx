@@ -19,7 +19,8 @@ export default function MovieTileGrid(props) {
         plot={item.plot}
         genres={item.genres}
         runtime={item.runtime}
-        userRating={item.userRating}
+        userRating={item.userRating} 
+        notes={item.notes}
         favourite={item.favourite}
         watched={item.watched}
         changeWatchedStatus={props.changeWatchedStatus}

@@ -697,3 +697,188 @@
   border-radius: 3px;
   margin-top: 2px;
 }
+
+/* ── Rating trigger button ─────────────────────────────────────────── */
+.rating-popover-wrapper {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  z-index: 20;
+}
+
+.movie-card-rate {
+  align-items: center;
+  background: rgba(18, 17, 16, 0.82);
+  border: 1px solid rgba(244, 239, 230, 0.45);
+  border-radius: 50%;
+  color: #f4efe6;
+  cursor: pointer;
+  display: flex;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  height: 30px;
+  justify-content: center;
+  padding: 0;
+  position: relative;
+  width: 30px;
+  z-index: 1;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.15s ease;
+}
+
+.movie-card-rate:hover {
+  background: rgba(200, 146, 42, 0.25);
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+  transform: scale(1.08);
+}
+
+.movie-card-rate[aria-expanded="true"] {
+  background: rgba(200, 146, 42, 0.35);
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+.movie-card-rate-value {
+  line-height: 1;
+}
+
+/* ── Morph container ───────────────────────────────────────────────── */
+.rating-popover-morph {
+  position: absolute;
+  bottom: 0;
+  left: 0; /* anchor: grows rightward by default */
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+
+  background: var(--popover-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--border-color);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+
+  transition:
+    width 0.35s cubic-bezier(0.34, 1.2, 0.64, 1),
+    height 0.35s cubic-bezier(0.34, 1.2, 0.64, 1),
+    border-radius 0.35s ease,
+    opacity 0.25s ease;
+}
+
+.rating-popover-morph--open {
+  width: 260px;
+  height: auto;
+  max-height: 360px;
+  border-radius: 12px;
+  opacity: 1;
+  pointer-events: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary-color) transparent;
+  z-index: 30;
+}
+
+/* Viewport-edge fallback: not enough room to the right → grow leftward */
+.rating-popover-morph--flip {
+  left: auto;
+  right: 0;
+}
+
+/* ── Form content ──────────────────────────────────────────────────── */
+.rating-popover-content {
+  padding: 14px 14px 12px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  transition-delay: 0s;
+  min-width: 232px;
+  display: flex;
+  flex-direction: column;
+}
+
+.rating-popover-content--visible {
+  opacity: 1;
+  transition-delay: 0.18s;
+}
+
+.rating-popover-notes-label {
+  color: var(--primary-color);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  margin: 12px 0 6px;
+  display: block;
+}
+
+.rating-popover-textarea {
+  width: 100%;
+  min-height: 64px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  color: var(--text-color);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  padding: 8px;
+  box-sizing: border-box;
+  resize: vertical;
+}
+
+.rating-popover-textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.rating-popover-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.rating-popover-save-btn {
+  background-color: var(--primary-color);
+  color: #1e1e1e;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 3px;
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: background-color 0.2s ease;
+}
+
+.rating-popover-save-btn:hover {
+  background-color: var(--primary-hover);
+}
+
+.rating-popover-cancel-btn {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: rgba(243, 242, 239, 0.7);
+  padding: 6px 14px;
+  border-radius: 3px;
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition:
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.rating-popover-cancel-btn:hover {
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}

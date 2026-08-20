@@ -186,35 +186,32 @@ function WatchlistPage() {
       console.error("Change favourite status error:", error.message);
     }
   }
+async function changeUserRating(id, userRating, notes) {
+  try {
+    const response = await fetch(
+      `${import.meta.env.VITE_API_URL}/watchlist/${id}/rating`,
+      {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userRating, notes }),
+      },
+    );
 
-  async function changeUserRating(id, userRating) {
-    try {
-      const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/watchlist/${id}/rating`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ userRating }),
-        },
-      );
+    const updatedMovie = await response.json();
 
-      const updatedMovie = await response.json();
-
-      if (!response.ok) {
-        throw new Error(updatedMovie.message || "Could not save rating");
-      }
-
-      setMovieData((currentMovies) =>
-        currentMovies.map((movie) =>
-          movie._id === id ? updatedMovie : movie,
-        ),
-      );
-    } catch (error) {
-      console.error("Change rating error:", error.message);
+    if (!response.ok) {
+      throw new Error(updatedMovie.message || "Could not save rating");
     }
+
+    setMovieData((currentMovies) =>
+      currentMovies.map((movie) =>
+        movie._id === id ? updatedMovie : movie,
+      ),
+    );
+  } catch (error) {
+    console.error("Change rating error:", error.message);
   }
+}
 
   //! Derived — no extra state needed, recomputes whenever movieData changes
   const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
